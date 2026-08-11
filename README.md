@@ -88,6 +88,8 @@
   ![Static Badge](https://img.shields.io/badge/UI-blue?style=flat-square) ![license](https://img.shields.io/github/license/MistEO/MXU?style=flat-square) MaaFramework Next UI
 - [MaaAssistantArknights](https://github.com/MaaAssistantArknights/MaaAssistantArknights)
   ![Static Badge](https://img.shields.io/badge/参考-blue?style=flat-square) ![license](https://img.shields.io/github/license/MaaAssistantArknights/MaaAssistantArknights?style=flat-square) 《明日方舟》小助手，全日常一键长草！
+- [MaaKEDR](https://github.com/APPLe-DF/MaaKEDR)
+  ![Static Badge](https://img.shields.io/badge/参考-blue?style=flat-square) ![license](https://img.shields.io/github/license/APPLe-DF/MaaKEDR?style=flat-square) MaaKEDR 雪松小助手：基于视觉 AI 的「雪松」自动化工具，由 MaaFramework 强力驱动！
 - [M9A](https://github.com/MAA1999/M9A)
  ![Static Badge](https://img.shields.io/badge/参考-blue?style=flat-square) ![license](https://img.shields.io/github/license/MaaXYZ/M9A?style=flat-square) 重返未来：1999 小助手
 - [MaaNTE](https://github.com/1bananachicken/MaaNTE)
