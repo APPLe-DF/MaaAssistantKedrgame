@@ -43,6 +43,7 @@ def _is_running_in_our_venv():
 def _has_venv_module():
     try:
         import venv  # noqa: F401
+
         return True
     except ImportError:
         return False
@@ -76,9 +77,7 @@ def ensure_venv_and_relaunch_if_needed():
             print("正在退出")
             sys.exit(1)
         except FileNotFoundError:
-            print(
-                f"命令 '{sys.executable} -m venv' 未找到。请确保 'venv' 模块可用。"
-            )
+            print(f"命令 '{sys.executable} -m venv' 未找到。请确保 'venv' 模块可用。")
             print("无法在没有虚拟环境的情况下继续。正在退出。")
             sys.exit(1)
 
@@ -165,7 +164,11 @@ def agent():
         from maa.toolkit import Toolkit
 
         import my_action  # noqa: F401
-        import my_reco   # noqa: F401
+        import my_reco  # noqa: F401
+
+        import custom
+
+        custom.register_all()
 
         Toolkit.init_option("./")
 

@@ -1,0 +1,300 @@
+{
+    "AutoSweepMain": {
+        "desc": "自动刷本入口",
+        "next": [
+            "AutoSweepStage",
+            "[JumpBack]AnySceneEnter_Combat_MaterialQuests_2"
+        ],
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "正在规划路线……",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    },
+    "AutoSweepStage": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Combat_MaterialQuests_Field_2"
+        ],
+        "next": [
+            "AutoSweep_Stage",
+            "AutoSweepFinish"
+        ]
+    },
+    "AutoSweep_Stage": {
+        "desc": "选关",
+        "next": [
+            "[JumpBack]SceneDo_Swipe_Stage_Swipe2begin",
+            "AutoSweep_Stage_Click",
+            "[JumpBack]SceneDo_Swipe_Stage_Swipe2next"
+        ]
+    },
+    "AutoSweep_Stage_Click": {
+        "desc": "选关-点击",
+        "recognition": "And",
+        "all_of": [
+            "UI_Combat_Stage_2-2"
+        ],
+        "action": "Click",
+        "next": [
+            "AutoSweepManager"
+        ]
+    },
+    "AutoSweepManager": {
+        "desc": "扫荡管理器（custom 控制扫荡循环）",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "AutoSweepManager",
+                "custom_action_param": {
+                    "batch_size": "auto"
+                }
+            }
+        },
+        "next": [
+            "AutoSweepFinish"
+        ]
+    },
+    "AutoSweep_Check_unlock": {
+        "desc": "确保已解锁自动战斗",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Sweep_lock.png" //[715,440,395,135]
+                ],
+                "roi": [
+                    695,
+                    410,
+                    435,
+                    175
+                ]
+            }
+        }
+    },
+    "AutoSweepFailed_lock": {
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "任务失败！对应关卡未解锁自动战斗。",
+                "display": [
+                    "log",
+                    "notification"
+                ]
+            }
+        }
+    },
+    "AutoSweep_Check_Stamina": {
+        "desc": "确保体力足够",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "lower": [
+                    113,
+                    0,
+                    0
+                ],
+                "upper": [
+                    241,
+                    34,
+                    18
+                ],
+                "roi": [
+                    1005,
+                    600,
+                    135,
+                    30
+                ],
+                "count": 100
+            }
+        }
+    },
+    "AutoSweep_Click_Sweep_min": {
+        "desc": "设置最小次数",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Sweep_min.png" //[720,505,80,55]
+                ],
+                "roi": [
+                    715,
+                    500,
+                    90,
+                    65
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "AutoSweep_Click_Sweep_max": {
+        "desc": "设置最大次数",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Sweep_max.png" //[1030,505,80,55]
+                ],
+                "roi": [
+                    1025,
+                    500,
+                    90,
+                    65
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "AutoSweep_Click_Sweep_minus": {
+        "desc": "次数-1",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Sweep_minus.png" //[720,450,40,40]
+                ],
+                "roi": [
+                    715,
+                    445,
+                    50,
+                    50
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "AutoSweep_Click_Sweep_plus": {
+        "desc": "次数+1",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Sweep_plus.png" //[1065,450,40,40]
+                ],
+                "roi": [
+                    1060,
+                    445,
+                    50,
+                    50
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "AutoSweep_Click_Start": {
+        "desc": "点击：准备快速战斗",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Sweep_Start.png"
+                ],
+                "roi": [
+                    620,
+                    595,
+                    535,
+                    100
+                ]
+            }
+        },
+        "action": "Click"
+    },
+    "AutoSweep_Check_Stamina2": {
+        "desc": "确保体力足够",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/no_stamina.png"
+                ],
+                "roi": [
+                    491,
+                    148,
+                    223,
+                    52
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    "AutoSweep_Click_Start2": {
+        "desc": "开始战斗（编队界面）",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Start2.png"
+                ],
+                "roi": [
+                    980,
+                    620,
+                    300,
+                    90
+                ],
+                "green_mask": true
+            }
+        },
+        "action": "Click",
+        "next": [
+            "[JumpBack]AutoSweep_Click_Stage_finish",
+            "[JumpBack]SceneDo_GetItem",
+            "AutoSweep_BackToStage"
+        ]
+    },
+    "AutoSweep_Click_Stage_finish": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/InStage/battle_victory.png"
+                ],
+                "roi": [
+                    14,
+                    6,
+                    270,
+                    119
+                ]
+            }
+        },
+        "action": "Click"
+    },
+    "AutoSweep_BackToStage": {
+        "desc": "确认已回到关卡详情界面（识别到扫荡开关区域）",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "打开",
+                    "关闭"
+                ],
+                "roi": [
+                    820,
+                    520,
+                    185,
+                    30
+                ]
+            }
+        },
+        "action": "DoNothing"
+    },
+    "AutoSweepFinish": {
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "任务完成！",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    }
+}
