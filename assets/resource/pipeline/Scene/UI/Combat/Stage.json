@@ -179,5 +179,203 @@
                 "threshold": 0.96
             }
         }
+    },
+    "UI_Combat_Stage_3-1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/3-1.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_3-2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/3-2.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_3-3": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/3-3.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_3-4": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/3-4.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_3-5": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/3-5.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_4-1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/4-1.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_4-2": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/4-2.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_4-3": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/4-3.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_4-4": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/4-4.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_4-5": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/4-5.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
+    },
+    "UI_Combat_Stage_4-6": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/Stage/4-6.png"
+                ],
+                "roi": [
+                    0,
+                    250,
+                    1280,
+                    350
+                ],
+                "green_mask": true,
+                "threshold": 0.96
+            }
+        }
     }
 }

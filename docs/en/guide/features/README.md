@@ -29,6 +29,7 @@ On the MAK home screen, click **添加任务** (“Add Task”) in the task list
 | 启动游戏 (Launch Game) | Automatically opens 《雪松》 and waits for it to finish loading | [View details](/en/guide/features/start-game.md) |
 | 领取奖励 (Claim Rewards) | Automatically claims daily task, weekly task, achievement, dispatch, and other rewards | [View details](/en/guide/features/award.md) |
 | 自动战斗 (Auto Battle) | Automatically enters and farms stages, including 资源收集 (Resource Collection) stages | [View details](/en/guide/features/auto-battle.md) |
+| 自动刷本 (Auto Sweep) | Sweeps stages quickly using the in-game 自动战斗 (Auto Battle) feature, with stamina-drain support | [View details](/en/guide/features/auto-sweep.md) |
 
 ---
 

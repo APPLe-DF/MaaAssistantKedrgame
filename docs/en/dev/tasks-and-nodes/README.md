@@ -17,3 +17,4 @@ Current contents:
 3. [Start Game (开始游戏)](/en/dev/tasks-and-nodes/tasks/start-game)
 4. [Claim Rewards (领取奖励)](/en/dev/tasks-and-nodes/tasks/award)
 5. [Auto Battle (自动战斗)](/en/dev/tasks-and-nodes/tasks/auto-battle)
+6. [Auto Sweep (自动刷本)](/en/dev/tasks-and-nodes/tasks/auto-sweep)

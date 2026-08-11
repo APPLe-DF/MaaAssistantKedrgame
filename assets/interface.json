@@ -67,7 +67,8 @@
     "import": [
         "resource/tasks/StartGame.json",
         "resource/tasks/Award.json",
-        "resource/tasks/AutoBattle.json"
+        "resource/tasks/AutoBattle.json",
+        "resource/tasks/AutoSweep.json"
     ],
     "option": {},
     "title": "MAK v325.799 | 雪松小助手"
