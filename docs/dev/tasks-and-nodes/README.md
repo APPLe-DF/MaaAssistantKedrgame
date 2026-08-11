@@ -13,3 +13,4 @@ title: 任务与节点
 3. [开始游戏](./start-game)
 4. [领取奖励](./award)
 5. [自动战斗](./auto-battle)
+6. [自动刷本](./auto-sweep)
