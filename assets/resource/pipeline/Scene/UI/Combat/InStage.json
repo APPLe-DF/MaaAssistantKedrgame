@@ -32,5 +32,22 @@
                 ]
             }
         }
+    },
+    "UI_Combat_InStage_continue": {
+        "desc": "战斗中-继续键",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/InStage/continue.png"
+                ],
+                "roi": [
+                    765,
+                    25,
+                    180,
+                    60
+                ]
+            }
+        }
     }
 }

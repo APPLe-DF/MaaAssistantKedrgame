@@ -14,7 +14,10 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "template": "UI/Loading/1.png",
+                "template": [
+                    "UI/Loading/1.png",
+                    "UI/Loading/2.png"
+                ],
                 "green_mask": true
             }
         }

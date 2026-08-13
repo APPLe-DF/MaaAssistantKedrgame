@@ -1,0 +1,174 @@
+{
+    // 干员 [606,617,103,103][711,617,103,103][817,617,103,103][922,617,103,103][1028,617,103,103][1131,617,103,103]
+    // 车 [1135,617,97,103]
+    // -----
+    // region 指挥
+    // -----
+    "Combat_InCombat_Operator_指挥": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/指挥.png"
+                ],
+                "roi": [
+                    600,
+                    600,
+                    680,
+                    120
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    // -----
+    // region 支援
+    // -----
+    "Combat_InCombat_Operator_支援": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/支援.png"
+                ],
+                "roi": [
+                    600,
+                    600,
+                    680,
+                    120
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    // -----
+    // region 特射
+    // -----
+    "Combat_InCombat_Operator_特射": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/特射.png"
+                ],
+                "roi": [
+                    600,
+                    600,
+                    680,
+                    120
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    // -----
+    // region 侦察
+    // -----
+    "Combat_InCombat_Operator_侦察": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/侦察.png"
+                ],
+                "roi": [
+                    600,
+                    600,
+                    680,
+                    120
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    // -----
+    // region 压制
+    // -----
+    "Combat_InCombat_Operator_压制": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/压制.png"
+                ],
+                "roi": [
+                    600,
+                    600,
+                    680,
+                    120
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    "Combat_InCombat_Operator_尤利娅": {
+        "recognition": "Or",
+        "any_of": [
+            "Combat_InCombat_Operator_尤利娅_P2_1"
+        ]
+    },
+    "Combat_InCombat_Operator_尤利娅_P2": {
+        "recognition": "Or",
+        "any_of": [
+            "Combat_InCombat_Operator_尤利娅_P2_1"
+        ]
+    },
+    "Combat_InCombat_Operator_尤利娅_P2_1": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/尤利娅_1.png"
+                ],
+                "roi": [
+                    600,
+                    600,
+                    680,
+                    120
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    // -----
+    // region 识别
+    // -----
+    "Combat_InCombat_Operator_Selected": {
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "method": 4,
+                "lower": [
+                    0,
+                    50,
+                    106
+                ],
+                "upper": [
+                    60,
+                    90,
+                    140
+                ],
+                "connected": true,
+                "count": 1000,
+                "order_by": "Area",
+                "index": 0
+            }
+        }
+    },
+    "Combat_InCombat_Operator_SkillReady": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Operator/SkillReady.png" // [1132,589,100,20]
+                ],
+                "roi": [
+                    600,
+                    575,
+                    680,
+                    40
+                ]
+            }
+        }
+    }
+}

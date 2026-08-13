@@ -1,0 +1,156 @@
+{
+    // [1157,198,99,99][1157,345,99,99][1157,491,99,99]
+    // -----
+    // region 进攻指令
+    // -----
+    "Combat_Team_Command_集体行动": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/集体行动.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    "Combat_Team_Command_攻击前进": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/攻击前进.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    "Combat_Team_Command_路径移动": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/路径移动.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    // -----
+    // region 防御指令
+    // -----
+    "Combat_Team_Command_散开": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/散开.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    // -----
+    // region 其它指令
+    // -----
+    "Combat_Team_Command_禁止开火": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/禁止开火.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    "Combat_Team_Command_集体上车": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/集体上车.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    "Combat_Team_Command_入驻建筑": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/入驻建筑.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    "Combat_Team_Command_单人换弹": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/单人换弹.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    },
+    "Combat_Team_Command_集体换弹": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/Team/Command/集体换弹.png"
+                ],
+                "roi": [
+                    1140,
+                    175,
+                    140,
+                    440
+                ]
+            }
+        }
+    }
+}

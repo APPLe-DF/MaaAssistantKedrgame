@@ -1,0 +1,20 @@
+{
+    // [1115,478,77,77]
+    "Combat_InCombat_Skill_尤利娅": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Skill/尤利娅.png"
+                ],
+                "roi": [
+                    1100,
+                    460,
+                    180,
+                    110
+                ],
+                "green_mask": true
+            }
+        }
+    }
+}

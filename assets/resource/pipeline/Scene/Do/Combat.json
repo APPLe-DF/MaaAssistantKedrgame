@@ -1,4 +1,7 @@
 {
+    // -----
+    // region 跳转
+    // -----
     "AnySceneEnter_Combat": {
         "desc": "任意场景进入出击页面",
         "next": [
@@ -63,6 +66,9 @@
             "[JumpBack]AnySceneEnter_Combat_MaterialQuests"
         ]
     },
+    // -----
+    // region UI动作
+    // -----
     "SceneDo_Click_Combat": {
         "desc": "点击出击",
         "recognition": "And",
@@ -176,5 +182,48 @@
             }
         },
         "max_hit": 0
+    },
+    // -----
+    // region 战斗内动作
+    // -----
+    "SceneDo_InCombat_LeftOperator_Swipe2begin": {
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    30,
+                    620,
+                    3,
+                    90
+                ],
+                "end": [
+                    350,
+                    620,
+                    3,
+                    90
+                ],
+                "end_hold": 500
+            }
+        }
+    },
+    "SceneDo_InCombat_LeftOperator_Swipe2next": {
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    350,
+                    620,
+                    3,
+                    90
+                ],
+                "end": [
+                    30,
+                    620,
+                    3,
+                    90
+                ],
+                "end_hold": 500
+            }
+        }
     }
 }
