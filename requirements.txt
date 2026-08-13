@@ -1,2 +1,3 @@
-maafw==v5.11.0
+maafw==v5.12.2
 json-with-comments
+numpy
