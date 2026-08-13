@@ -1,0 +1,23 @@
+{
+    // -----
+    // region 图格
+    // -----
+    "Combat_InCombat_Map_Grid_Bushes": {
+        "recognition": "Or",
+        "any_of": [
+            "Combat_InCombat_Map_Grid_Bushes_dark"
+        ]
+    },
+    "Combat_InCombat_Map_Grid_Bushes_dark": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "Combat/InCombat/Map/Grid/Bushes_dark.png",
+                    "Combat/InCombat/Map/Grid/Bushes_dark_2.png"
+                ],
+                "green_mask": true
+            }
+        }
+    }
+}
