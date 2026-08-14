@@ -1,0 +1,18 @@
+{
+    "UI_Combat_StageDetails_Close": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": [
+                    "UI/Combat/StageDetails/Close.png" // [1101,41,34,35]
+                ],
+                "roi": [
+                    1091,
+                    31,
+                    54,
+                    55
+                ]
+            }
+        }
+    }
+}

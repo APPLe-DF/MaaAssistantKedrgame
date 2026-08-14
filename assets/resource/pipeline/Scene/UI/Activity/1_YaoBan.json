@@ -1,0 +1,74 @@
+{
+    "Status_In_Activity_YaoBanEnter": {
+        "desc": "处于耀斑活动首页",
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_DailyAward",
+            "UI_Activity_YaoBan_Task",
+            "UI_Activity_YaoBan_Combat"
+        ]
+    },
+    "UI_Activity_YaoBanEnter": {
+        "desc": "耀斑活动UI-主页进入按钮",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Enter.png", // [30,170,190,65]
+                "roi": [
+                    25,
+                    165,
+                    200,
+                    265
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    "UI_Activity_YaoBan_DailyAward": {
+        "desc": "耀斑活动UI-每日奖励",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/DailyAward.png", // [45,135,235,65]
+                "roi": [
+                    40,
+                    130,
+                    245,
+                    75
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    "UI_Activity_YaoBan_Task": {
+        "desc": "耀斑活动UI-任务",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Task.png", // [45,225,235,65]
+                "roi": [
+                    40,
+                    220,
+                    245,
+                    75
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    "UI_Activity_YaoBan_Combat": {
+        "desc": "耀斑活动UI-作战",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Combat.png", // [950,550,290,130]
+                "roi": [
+                    945,
+                    545,
+                    300,
+                    140
+                ]
+            }
+        }
+    }
+}

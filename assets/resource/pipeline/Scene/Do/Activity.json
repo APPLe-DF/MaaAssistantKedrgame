@@ -1,0 +1,21 @@
+{
+    "AnySceneEnter_Activity_1": {
+        "desc": "任意场景进入耀斑活动首页",
+        "next": [
+            "Status_In_Activity_YaoBanEnter",
+            "[JumpBack]SceneDo_Click_Activity_YaoBanEnter",
+            "[JumpBack]Status_Loading_Screen",
+            "[JumpBack]AnySceneEnter_MainMenu"
+        ]
+    },
+    "SceneDo_Click_Activity_YaoBanEnter": {
+        "desc": "点击耀斑活动主页进入按钮",
+        "recognition": "And",
+        "all_of": [
+            "Status_In_MainMenu",
+            "UI_Activity_YaoBanEnter"
+        ],
+        "box_index": 1,
+        "action": "Click"
+    }
+}

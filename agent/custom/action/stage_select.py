@@ -90,12 +90,37 @@ class StageSelect(CustomAction):
                             tuple(box),  # box: [x, y, w, h]，点击其中心
                             "",
                         )
-                    print(f"[Stage_Select] 已点击目标关卡: {stage}，等待并校验……")
-                    if self._verify_stage(context, target_norm):
+                    print(f"[Stage_Select] 已点击目标关卡: {stage}，等待……")
+                    # 活动关特殊逻辑：点击后先确认是否出现"次数耗尽"提示；有则跳过本关
+                    if argv.node_name.startswith(
+                        "AutoSweep_Activity_1_Stage"
+                    ) and self._check_times_exhausted(context):
+                        print(
+                            f"[Stage_Select] 关卡 {stage} 挑战次数已耗尽，转 AutoSweep_Activity_1_Times0"
+                        )
+                        context.override_next(
+                            argv.node_name, ["AutoSweep_Activity_1_Times0"]
+                        )
+                        return CustomAction.RunResult(success=True)
+                    # 未出现耗尽提示 → 校验进入的关卡（成功/关卡不符/失败 三态）
+                    verify = self._verify_stage(context, target_norm)
+                    if verify == "success":
                         print(f"[Stage_Select] 校验通过：已进入关卡 {stage}")
                         return CustomAction.RunResult(success=True)
-                    print(f"[Stage_Select] 校验失败：进入的关卡与目标 {stage} 不符")
-                    return CustomAction.RunResult(success=False)
+                    if verify == "mismatch":
+                        # 进错关卡 → 关闭详情回到地图，重新寻找
+                        print(
+                            f"[Stage_Select] 进入的关卡与目标 {stage} 不符，关闭详情重新寻找"
+                        )
+                        self._click_node(context, "UI_Combat_StageDetails_Close")
+                        return None
+                    # 校验失败（未识别到关卡名）→ 判断是否在关卡详情：在则退出，否则视为已在地图，重新寻找
+                    print(
+                        f"[Stage_Select] 未识别到关卡名，处理关卡详情状态后重新寻找 {stage}"
+                    )
+                    if self._on_stage_detail(context):
+                        self._click_node(context, "UI_Combat_StageDetails_Close")
+                    return None
             return None
 
         # ── 1. 等待地图加载完成 ──
@@ -107,7 +132,7 @@ class StageSelect(CustomAction):
             stages = self._scan(context, roi)
             if stages is not None:
                 break
-            context.run_task(swipe_begin)
+            self._swipe_twice(context, swipe_begin)
             time.sleep(self.SWIPE_SETTLE_SECONDS)
         if stages is None:
             print("[Stage_Select] 始终未识别到有效关卡，无法定位")
@@ -128,7 +153,7 @@ class StageSelect(CustomAction):
             for _ in range(max_swipes):
                 stages = self._scan(context, roi)
                 if stages is None:
-                    context.run_task(swipe_begin)
+                    self._swipe_twice(context, swipe_begin)
                     time.sleep(self.SWIPE_SETTLE_SECONDS)
                     continue
                 click_result = try_click(stages)
@@ -138,14 +163,16 @@ class StageSelect(CustomAction):
                 if stages[0]["norm"] == first_norm or norms == prev_norms:
                     break  # 已到最左侧
                 prev_norms = norms
-                context.run_task(swipe_begin)
+                self._swipe_twice(context, swipe_begin)
                 time.sleep(self.SWIPE_SETTLE_SECONDS)
         else:
             # 目标 EP 开头 = (EP(target_ep-1), EP(target_ep)) 交界
             for _ in range(max_swipes):
                 stages = self._scan(context, roi)
                 if stages is None:
-                    context.run_task(swipe_next)  # 偶发识别失败 → 向右推进重试
+                    self._swipe_twice(
+                        context, swipe_begin
+                    )  # 偶发识别失败 → 向左推进重试
                     time.sleep(self.SWIPE_SETTLE_SECONDS)
                     continue
                 click_result = try_click(stages)
@@ -156,16 +183,16 @@ class StageSelect(CustomAction):
                 if lo == target_ep - 1 and hi >= target_ep:
                     break  # 已看到前一 EP 与目标 EP → 在目标 EP 开头
                 if hi < target_ep:
-                    context.run_task(swipe_next)  # 目标 EP 在更右侧
+                    self._swipe_twice(context, swipe_next)  # 目标 EP 在更右侧
                 else:
-                    context.run_task(swipe_begin)  # 目标 EP 开头在更左侧
+                    self._swipe_twice(context, swipe_begin)  # 目标 EP 开头在更左侧
                 time.sleep(self.SWIPE_SETTLE_SECONDS)
 
         # ── 4. 从目标 EP 开头向后（前进方向）划动寻找目标并点击 ──
         for _ in range(max_swipes):
             stages = self._scan(context, roi)
             if stages is None:
-                context.run_task(swipe_next)
+                self._swipe_twice(context, swipe_next)
                 time.sleep(self.SWIPE_SETTLE_SECONDS)
                 continue
             click_result = try_click(stages)
@@ -175,7 +202,7 @@ class StageSelect(CustomAction):
                 # 已越过目标 EP 仍未找到 → 失败
                 print(f"[Stage_Select] 已越过 EP{target_ep} 仍未找到关卡 {stage}")
                 return CustomAction.RunResult(success=False)
-            context.run_task(swipe_next)
+            self._swipe_twice(context, swipe_next)
             time.sleep(self.SWIPE_SETTLE_SECONDS)
 
         print(f"[Stage_Select] 超过最大滑动次数 {max_swipes}，仍未找到关卡 {stage}")
@@ -186,11 +213,21 @@ class StageSelect(CustomAction):
         context.tasker.controller.post_screencap().wait()
         return context.tasker.controller.cached_image
 
-    def _verify_stage(self, context: Context, target_norm: str) -> bool:
-        """点击后等待数秒，OCR 校验进入的关卡标题与目标一致。
+    def _swipe_twice(self, context: Context, node_name: str) -> None:
+        """一次划两下，加快选关定位"""
+        context.run_task(node_name)
+        context.run_task(node_name)
+
+    def _verify_stage(self, context: Context, target_norm: str) -> str:
+        """点击后等待数秒，OCR 校验进入的关卡标题。
 
         先等待关卡详情加载（VERIFY_WAIT_SECONDS），再对 VERIFY_ROI 做 OCR；
         兼容 OCR 将 "EX2-1" 读成 "2-1" 的情况。
+
+        返回三种结果：
+          - "success"  进入的关卡与目标一致
+          - "mismatch" 识别到关卡名（1-1 / EX1-1 格式）但非目标 → 进错关卡
+          - "failed"   未识别到任何关卡名（可能未进入详情或仍在加载）
         """
         time.sleep(self.VERIFY_WAIT_SECONDS)
 
@@ -206,12 +243,60 @@ class StageSelect(CustomAction):
                 image,
             )
             if detail and detail.hit:
+                norms: list[str] = []
                 for result in detail.all_results:
                     text = getattr(result, "text", "") or ""
-                    norm = self._normalize(text)
-                    if any(c in norm for c in candidates):
-                        return True
+                    if not self._STAGE_EP_PATTERN.search(text):
+                        continue  # 忽略非关卡名格式（1-1 / EX1-1）的文本
+                    norms.append(self._normalize(text))
+                if norms:
+                    if any(c in norm for norm in norms for c in candidates):
+                        return "success"
+                    return "mismatch"
             time.sleep(0.5)
+        return "failed"
+
+    def _check_times_exhausted(self, context: Context) -> bool:
+        """OCR [260, 100, 750, 60]，包含"已耗尽"则返回 True（挑战次数已耗尽）"""
+        image = self._screencap(context)
+        detail = context.run_recognition_direct(
+            JRecognitionType.OCR,
+            JOCR(roi=[260, 100, 750, 60]),
+            image,
+        )
+        if detail and detail.hit:
+            for result in detail.all_results:
+                text = getattr(result, "text", "") or ""
+                if "已耗尽" in text:
+                    return True
+        return False
+
+    def _on_stage_detail(self, context: Context) -> bool:
+        """通过 UI_Combat_StageDetails_Close 是否命中判断是否在关卡详情页"""
+        image = self._screencap(context)
+        detail = context.run_recognition("UI_Combat_StageDetails_Close", image)
+        return bool(detail and detail.hit)
+
+    def _click_node(
+        self,
+        context: Context,
+        node_name: str,
+        attempts: int = 5,
+        interval: float = 0.5,
+    ) -> bool:
+        """识别指定节点并点击其中心，返回是否成功点击"""
+        for _ in range(attempts):
+            image = self._screencap(context)
+            detail = context.run_recognition(node_name, image)
+            if detail and detail.hit and detail.box:
+                context.run_action_direct(
+                    JActionType.Click,
+                    JClick(),
+                    tuple(detail.box),
+                    "",
+                )
+                return True
+            time.sleep(interval)
         return False
 
     def _scan(self, context: Context, roi: Any) -> list[dict[str, Any]] | None:
@@ -223,7 +308,7 @@ class StageSelect(CustomAction):
         image = self._screencap(context)
         detail = context.run_recognition_direct(
             JRecognitionType.OCR,
-            JOCR(roi=roi),
+            JOCR(roi=roi, color_filter="UI_Combat_StageMap_TextMask"),
             image,
         )
         if not detail or not detail.hit:

@@ -1,0 +1,140 @@
+{
+    "AutoSweep_Activity_1_Main": {
+        "desc": "耀斑自动扫荡入口",
+        "next": [
+            "AutoSweep_Activity_1_Field",
+            "[JumpBack]AnySceneEnter_Activity_1"
+        ],
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "正在规划路线……",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    },
+    "AutoSweep_Activity_1_Field": {
+        "desc": "耀斑自动扫荡：进入作战选关地图",
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_Combat"
+        ],
+        "action": "Click",
+        "next": [
+            "AutoSweep_Activity_1_StageLoop"
+        ]
+    },
+    "AutoSweep_Activity_1_StageLoop": {
+        "desc": "耀斑自动扫荡：跳板节点（逐个扫荡已选关卡，max_hit=1 保证每关只扫一次）",
+        "timeout": 1000,
+        "next": [
+            "[JumpBack]AutoSweep_Click_Stage_finish",
+            "[JumpBack]SceneDo_GetItem",
+            "[JumpBack]Status_Loading_Screen",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX2_1",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX2_2",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX3_1",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX4_1",
+            "AutoSweep_Activity_1_Finish"
+        ]
+    },
+    "AutoSweep_Activity_1_Stage_EX2_1": {
+        "desc": "耀斑自动扫荡：选关 EX2-1",
+        "enabled": false,
+        "max_hit": 1,
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "Stage_Select",
+                "custom_action_param": {
+                    "stage": "EX2-1"
+                }
+            }
+        },
+        "next": [
+            "AutoSweep_Activity_1_Manager"
+        ]
+    },
+    "AutoSweep_Activity_1_Stage_EX2_2": {
+        "desc": "耀斑自动扫荡：选关 EX2-2",
+        "enabled": false,
+        "max_hit": 1,
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "Stage_Select",
+                "custom_action_param": {
+                    "stage": "EX2-2"
+                }
+            }
+        },
+        "next": [
+            "AutoSweep_Activity_1_Manager"
+        ]
+    },
+    "AutoSweep_Activity_1_Stage_EX3_1": {
+        "desc": "耀斑自动扫荡：选关 EX3-1",
+        "enabled": false,
+        "max_hit": 1,
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "Stage_Select",
+                "custom_action_param": {
+                    "stage": "EX3-1"
+                }
+            }
+        },
+        "next": [
+            "AutoSweep_Activity_1_Manager"
+        ]
+    },
+    "AutoSweep_Activity_1_Stage_EX4_1": {
+        "desc": "耀斑自动扫荡：选关 EX4-1",
+        "enabled": false,
+        "max_hit": 1,
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "Stage_Select",
+                "custom_action_param": {
+                    "stage": "EX4-1"
+                }
+            }
+        },
+        "next": [
+            "AutoSweep_Activity_1_Manager"
+        ]
+    },
+    "AutoSweep_Activity_1_Manager": {
+        "desc": "耀斑自动扫荡：管理器（检查次数 + 满额扫荡循环 + 回地图）",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "AutoSweep_Activity_1_Manager"
+            }
+        },
+        "post_delay": 5000
+    },
+    "AutoSweep_Activity_1_Times0": {
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "今日次数已耗尽，跳过本关",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    },
+    "AutoSweep_Activity_1_Finish": {
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "任务完成！",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    }
+}
