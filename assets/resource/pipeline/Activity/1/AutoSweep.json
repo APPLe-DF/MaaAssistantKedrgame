@@ -41,6 +41,10 @@
     },
     "AutoSweep_Activity_1_Stage_EX2_1": {
         "desc": "耀斑自动扫荡：选关 EX2-1",
+        "recognition": "And",
+        "all_of": [
+            "UI_Common_HomeButton"
+        ],
         "enabled": false,
         "max_hit": 1,
         "action": {
@@ -58,6 +62,10 @@
     },
     "AutoSweep_Activity_1_Stage_EX2_2": {
         "desc": "耀斑自动扫荡：选关 EX2-2",
+        "recognition": "And",
+        "all_of": [
+            "UI_Common_HomeButton"
+        ],
         "enabled": false,
         "max_hit": 1,
         "action": {
@@ -75,6 +83,10 @@
     },
     "AutoSweep_Activity_1_Stage_EX3_1": {
         "desc": "耀斑自动扫荡：选关 EX3-1",
+        "recognition": "And",
+        "all_of": [
+            "UI_Common_HomeButton"
+        ],
         "enabled": false,
         "max_hit": 1,
         "action": {
@@ -92,6 +104,10 @@
     },
     "AutoSweep_Activity_1_Stage_EX4_1": {
         "desc": "耀斑自动扫荡：选关 EX4-1",
+        "recognition": "And",
+        "all_of": [
+            "UI_Common_HomeButton"
+        ],
         "enabled": false,
         "max_hit": 1,
         "action": {
@@ -128,6 +144,10 @@
         }
     },
     "AutoSweep_Activity_1_Finish": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Common_HomeButton"
+        ],
         "focus": {
             "Node.Recognition.Starting": {
                 "content": "任务完成！",
