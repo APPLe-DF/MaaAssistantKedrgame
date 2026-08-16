@@ -34,6 +34,12 @@
                 "/install/config/maa_pi_config.json"
             ],
             "url": "/deps/tools/interface_config.schema.json"
+        },
+        {
+            "fileMatch": [
+                "/agent/custom/action/scene_jump_map.json"
+            ],
+            "url": "/agent/custom/action/scene_jump_map.schema.json"
         }
     ],
     "files.exclude": {
