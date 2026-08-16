@@ -1,0 +1,29 @@
+{
+    "name": "maak-scene-jump",
+    "displayName": "MAK SceneJump 节点跳转",
+    "description": "为 agent/custom/action/scene_jump_map.json 提供节点引用的定义跳转/悬停/查找引用/补全，借用 Maa 扩展的语义分析能力（独立实现）。",
+    "version": "0.0.1",
+    "publisher": "local",
+    "engines": {
+        "vscode": "^1.100.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "workspaceContains:**/agent/custom/action/scene_jump_map.json"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "maak-scene-jump.refreshIndex",
+                "title": "MaaK: 刷新 SceneJump 节点索引"
+            }
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Hollow-YK/MaaAssistantKedrgame"
+    }
+}
