@@ -17,6 +17,53 @@ from .general import parse_params
 MAP_FILE = Path(__file__).resolve().parent / "scene_jump_map.json"
 
 
+def _strip_jsonc_comments(text: str) -> str:
+    """移除 JSONC 注释（// 与 /* */），保留字符串/转义，并维持行号。
+
+    scene_jump_map.json 允许写注释（agent 运行时无法引用 tools/，此处自包含实现）。
+    """
+    result = []
+    state = 0  # 0=普通, 1=字符串内, 2=转义
+    i = 0
+    n = len(text)
+    while i < n:
+        ch = text[i]
+        if state == 0:
+            if ch == '"':
+                result.append(ch)
+                state = 1
+                i += 1
+            elif text.startswith("//", i):
+                i += 2
+                while i < n and text[i] != "\n":
+                    i += 1
+                if i < n:
+                    result.append("\n")  # 保留换行以维持行号
+                    i += 1
+            elif text.startswith("/*", i):
+                i += 2
+                while i + 1 < n and not text.startswith("*/", i):
+                    if text[i] == "\n":
+                        result.append("\n")
+                    i += 1
+                i = min(i + 2, n)
+            else:
+                result.append(ch)
+                i += 1
+        elif state == 1:
+            result.append(ch)
+            if ch == "\\":
+                state = 2
+            elif ch == '"':
+                state = 0
+            i += 1
+        else:  # state == 2（转义）
+            result.append(ch)
+            state = 1
+            i += 1
+    return "".join(result)
+
+
 @AgentServer.custom_action("SceneJump")
 class SceneJump(CustomAction):
     """通用场景跳转 Custom。
@@ -25,7 +72,7 @@ class SceneJump(CustomAction):
     规划最短路径，并通过多次“一步跳转”最终到达目标场景。
 
     数据文件（scene_jump_map.json）格式：
-      - scenes: 场景名 → { desc, detect(用于识别该场景的 pipeline 节点，缺省为场景名), parent(父场景,可选) }
+      - scenes: 场景名 → { desc, detect(用于识别该场景的 pipeline 节点，可选；缺省表示仅作 parent 的抽象场景，不直接识别), parent(父场景,可选) }
       - edges:  跳转关系 { from, to, cost(该一步跳转的成本,缺省1,数值越小越优先), jump(一步跳转要执行的 pipeline 节点名或列表，可为空), via(中间场景列表) }
         to 可为单个场景名或场景名列表：列表表示执行 jump 后有概率进入其中任意一个场景（例如
         进游戏可能落到主界面或签到页）；落到非目标候选时，会沿该候选继续规划下一步。
@@ -70,6 +117,7 @@ class SceneJump(CustomAction):
     DEFAULT_MAX_TOTAL_EDGES = 30
 
     def __init__(self) -> None:
+        super().__init__()  # 初始化基类 _handle（AgentServer 注册时需要 c_handle）
         self.scenes: dict[str, dict[str, Any]] = {}
         self._adj: dict[str, list[dict[str, Any]]] = {}
 
@@ -263,8 +311,8 @@ class SceneJump(CustomAction):
 
     def _load_map(self) -> bool:
         try:
-            with open(MAP_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            with open(MAP_FILE, "r", encoding="utf-8-sig") as f:
+                data = json.loads(_strip_jsonc_comments(f.read()))
         except Exception:
             traceback.print_exc()
             return False
@@ -419,10 +467,15 @@ class SceneJump(CustomAction):
         return context.tasker.controller.cached_image
 
     def _detect_scene(self, context: Context) -> str | None:
-        """按 scenes 定义顺序检测当前场景（更具体的场景优先，返回第一个命中的）。"""
+        """按 scenes 定义顺序检测当前场景（更具体的场景优先，返回第一个命中的）。
+
+        无 detect 的场景视为“仅作 parent 的抽象场景”，不可直接识别，跳过。
+        """
         image = self._screencap(context)
         for name, scene in self.scenes.items():
-            node = scene.get("detect") or name
+            node = scene.get("detect")
+            if not node:
+                continue  # 仅作 parent，无独立识别
             detail = context.run_recognition(str(node), image)
             if detail and detail.hit:
                 return name
@@ -433,7 +486,9 @@ class SceneJump(CustomAction):
         image = self._screencap(context)
         matches: list[str] = []
         for name, scene in self.scenes.items():
-            node = scene.get("detect") or name
+            node = scene.get("detect")
+            if not node:
+                continue  # 仅作 parent，无独立识别
             detail = context.run_recognition(str(node), image)
             if detail and detail.hit:
                 matches.append(name)
@@ -442,6 +497,17 @@ class SceneJump(CustomAction):
     # ------------------------------------------------------------------
     # 单步跳转执行与等待
     # ------------------------------------------------------------------
+    @staticmethod
+    def _run_jump_node(context: Context, node: str) -> None:
+        """执行单个 jump 节点：仅做该节点本身，忽略其 next 链。
+
+        用 pipeline_override 把该节点的 next 清空，run_task 执行完当前节点即终止，
+        不会级联执行 next 里的后续节点（如 Award_DailyAward_Click:Get 不再顺带
+        执行 Award_DailyAward_MonthlyPlan / AnySceneEnter_MainMenu）。
+        覆盖仅对本次调用生效，不影响 context 中其它流程。
+        """
+        context.run_task(node, {node: {"next": []}})
+
     def _execute_edge(
         self,
         context: Context,
@@ -483,7 +549,7 @@ class SceneJump(CustomAction):
         for node in jumps:
             if time.time() >= deadline:
                 return False, None
-            context.run_task(str(node))
+            self._run_jump_node(context, str(node))
 
         # 2) 轮询等待场景变化（同一时刻可能有多个场景同时匹配，逐一判断）
         retries = 1 if jumps else 0  # 已执行 jump 的次数
@@ -505,7 +571,7 @@ class SceneJump(CustomAction):
                 if retries < max_attempts:
                     _nap(retry_interval)
                     for node in jumps:
-                        context.run_task(str(node))
+                        self._run_jump_node(context, str(node))
                     retries += 1
                     continue
                 # 重试次数用尽，继续等待到超时

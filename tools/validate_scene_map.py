@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """解析并校验 scene_jump_map.json 中的节点引用。
 
-对 scene_jump_map.json 里每一处“用到节点”的位置（scenes 的场景名 / detect / parent，
-edges 的 from / to / jump / via）：
+对 scene_jump_map.json 里每一处“用到节点”的位置（scenes 的 detect / parent，
+edges 的 from / to / jump / via；无 detect 的场景视为仅作 parent 的抽象场景，
+不要求对应 pipeline 节点）：
   1. 解析其在 pipeline 资源中的定义位置（文件:行号），输出可点击的跳转清单；
   2. 检查引用到不存在的节点（跨文件一致性校验，JSON Schema 无法表达）。
 
@@ -18,7 +19,7 @@ import re
 import sys
 from pathlib import Path
 
-from validate_schema import find_line_number, load_jsonc
+from validate_schema import find_line_number, load_jsonc, strip_jsonc_comments
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_MAP = REPO_ROOT / "agent" / "custom" / "action" / "scene_jump_map.json"
@@ -69,9 +70,13 @@ def fmt_defs(defs):
     """把定义列表格式化为可点击的 file:line 文本"""
     if not defs:
         return "（无定义）"
+    root = REPO_ROOT.resolve()
     parts = []
     for fp, line in defs[:3]:
-        rel = fp.relative_to(REPO_ROOT).as_posix()
+        try:
+            rel = Path(fp).resolve().relative_to(root).as_posix()
+        except ValueError:
+            rel = str(fp)  # 相对路径/仓库外路径无法相对化时原样显示
         parts.append(f"{rel}:{line}" if line else f"{rel}:?")
     if len(defs) > 3:
         parts.append(f"…另有 {len(defs) - 3} 处")
@@ -101,7 +106,7 @@ def main():
         sys.exit(1)
 
     with open(map_path, encoding="utf-8-sig") as f:
-        map_data = json.load(f)
+        map_data = json.loads(strip_jsonc_comments(f.read()))
     scenes = map_data.get("scenes", {})
     edges = map_data.get("edges", [])
 
@@ -135,7 +140,7 @@ def main():
             return
         if node in scenes:
             line = find_scene_line(map_path, node)
-            resolved.append((ref_path, node, [(str(map_path), line)]))
+            resolved.append((ref_path, node, [(map_path, line)]))
         else:
             errors.append((ref_path, node, f"{kind}未在 scenes 中定义"))
 
@@ -145,9 +150,7 @@ def main():
         if detect:
             # 显式指定 detect：节点引用，须在 pipeline 中
             resolve_node(f"scenes.{name}.detect", detect)
-        else:
-            # 未指定 detect：detect 缺省为场景名，场景名须为 pipeline 节点
-            resolve_node(f"scenes.{name}", name)
+        # 未指定 detect：仅作 parent 的抽象场景，不直接识别，不要求 pipeline 节点
         parent = sc.get("parent")
         if parent:
             check_scene(f"scenes.{name}.parent", parent, "parent")

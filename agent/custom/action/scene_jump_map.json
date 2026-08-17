@@ -1,6 +1,27 @@
+// 场景跳转关系表（本文件支持 JSONC 注释：// 与 /* */）
+// scenes: 场景名 → { desc, detect, parent? }
+// edges:  { from, to, cost?, jump?, via? }，cost 越小越优先，Dijkstra 取总成本最小路径
 {
     "$doc": "场景跳转关系表，供 SceneJump custom action 使用。scenes 记录场景（场景名即 pipeline 节点名），edges 记录跳转关系：from=当前场景, to=目标场景, cost=该一步跳转的成本(缺省1,数值越小越优先), jump=一步跳转要执行的 pipeline 节点（可多个,按序执行）, via=跳转过程中会短暂经过且无需额外操作的中间场景。路径规划用 Dijkstra 取总成本最小的路径。",
     "scenes": {
+        // -----
+        // region 通用场景
+        // -----
+        "HomeButten": {
+            "desc": "主页按钮",
+            "detect": "UI_Common_HomeButton"
+        },
+        "Loading_Screen": {
+            "desc": "加载界面",
+            "detect": "Status_Loading_Screen"
+        },
+        "Status_In_Stage": {
+            "desc": "战斗中",
+            "detect": "Status_In_Stage"
+        },
+        // -----
+        // region 启动
+        // -----
         "StartGame_icon": {
             "desc": "启动游戏-图标界面",
             "detect": "StartGame_icon"
@@ -17,13 +38,12 @@
             "desc": "月卡",
             "detect": "Award_DailyAward_MonthlyPlan"
         },
+        // -----
+        // region 主要界面
+        // -----
         "MainMenu": {
             "desc": "主界面",
             "detect": "Status_In_MainMenu"
-        },
-        "Loading_Screen": {
-            "desc": "加载界面",
-            "detect": "Status_Loading_Screen"
         },
         "Combat": {
             "desc": "出击界面",
@@ -43,13 +63,20 @@
             "desc": "出击-技能演练",
             "detect": "UI_Combat_SkillMaterial_selected",
             "parent": "Combat"
-        },
-        "Status_In_Stage": {
-            "desc": "战斗中",
-            "detect": "Status_In_Stage"
         }
     },
     "edges": [
+        {
+            "from": "HomeButten",
+            "to": "MainMenu",
+            "cost": 10,
+            "jump": [
+                "SceneDo_PauseHomeButton"
+            ],
+            "via": [
+                "Loading_Screen"
+            ]
+        },
         {
             "from": "StartGame_icon",
             "to": "StartGame",

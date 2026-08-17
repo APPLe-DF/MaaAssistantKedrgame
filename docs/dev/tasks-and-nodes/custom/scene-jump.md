@@ -12,9 +12,7 @@ Custom Action：`SceneJump`
 
 数据表：`agent/custom/action/scene_jump_map.json`
 
-子流程目录：`agent/custom/action/scene_jump_map.schema.json`
-
-Schema：`AutoBattleMain`
+Schema：`agent/custom/action/scene_jump_map.schema.json`
 
 ## 功能概述
 
@@ -65,12 +63,14 @@ Schema：`AutoBattleMain`
 ## 数据表格式
 
 `scene_jump_map.json` 由 `scenes`（场景定义）与 `edges`（跳转关系）两部分组成。
+文件支持 JSONC 注释（`//` 与 `/* */`），注释不影响加载、校验与扩展功能，便于按 `region` 分组标注。
 
 ### scenes
 
 ```jsonc
 {
     "scenes": {
+        "Activity_1": { "desc": "活动1（抽象分组，仅作 parent）" },
         "MainMenu": { "desc": "主界面", "detect": "Status_In_MainMenu" },
         "Combat": { "desc": "出击界面", "detect": "Status_In_Combat" },
         "Combat_SkillMaterial": {
@@ -85,7 +85,7 @@ Schema：`AutoBattleMain`
 | 字段 | 说明 |
 | --- | --- |
 | `desc` | 场景描述，用于日志与扩展悬停 |
-| `detect` | 用于识别该场景的 pipeline 节点名；缺省时使用场景名本身 |
+| `detect` | （可选）用于识别该场景的 pipeline 节点名；**缺省表示该场景仅作 `parent`** 的抽象场景，不直接识别，也不要求对应 pipeline 节点 |
 | `parent` | （可选）父场景名。表示“处于子场景即视为处于父场景”，规划时子场景可使用父场景的出边 |
 
 ### edges
@@ -115,7 +115,7 @@ Schema：`AutoBattleMain`
 | `from` | 当前场景名（须在 `scenes` 中） |
 | `to` | 目标场景名，**或场景名列表**（操作后有概率进入其中任意一个） |
 | `cost` | 该一步跳转的成本（缺省 1，越小越优先） |
-| `jump` | 一步跳转要执行的 pipeline 节点名（可多个，按序执行）；**可为空 `[]`**，表示无需操作、等待自然跳转 |
+| `jump` | 一步跳转要执行的 pipeline 节点名（可多个，按序执行）；**可为空 `[]`**，表示无需操作、等待自然跳转。执行时**仅跑该节点本身，忽略其 `next` 链**，不会级联后续节点 |
 | `via` | 跳转过程中“可能经过”的中间场景（**并不保证一定经过**，也可能略过） |
 
 ## 语义要点
@@ -124,6 +124,11 @@ Schema：`AutoBattleMain`
   `cost` 之和），而非单纯的步数最少。
 - **多候选 `to`**：执行 jump 后有概率落到其中任意一个候选；落到非目标候选时，会沿该候选继续规划下一步。
 - **空 `jump`**：表示 `from` 场景无需任何操作，等待后必然会在某一刻自然进入 `to`。
+- **`jump` 忽略 `next` 链**：执行 jump 节点时只做该节点本身（识别+动作），不跟随其 `next` 链。
+  例如用 `Award_DailyAward_Click:Get` 做 jump 时，不会顺带执行它 `next` 里的月卡检测/回主界面节点；
+  点完后由 SceneJump 重新识别场景并按 `to` 判断。
+- **无 `detect` 的抽象场景**：仅作 `parent` 的抽象分组（如 `Activity_1`），不参与识别；
+  可被 `parent` 引用，也可作为目标（子场景经 `parent` 链满足它）。
 - **`parent` 出边继承**：处于子场景即可使用父场景（沿 `parent` 链）的出边。例如
   `MainMenu → Combat_MainStory`（子场景），再借 `Combat` 的出边到达 `Combat_SkillMaterial`。
 - **多起点选择**：同一时刻可能有多个场景同时满足识别（如出击页与其子 Tab），这些场景都可作起点，

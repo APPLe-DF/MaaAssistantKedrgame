@@ -15,6 +15,7 @@ const path = require('path');
 const vscode = require('vscode');
 const {
   scanJsoncStrings,
+  parseJsonc,
   refKind,
   isSceneRef,
   tokenAt,
@@ -91,7 +92,7 @@ function buildSceneInfo(doc) {
   const toks = docTokens(doc);
   let scenesObj = {};
   try {
-    const obj = JSON.parse(doc.getText());
+    const obj = parseJsonc(doc.getText());
     if (obj && obj.scenes && typeof obj.scenes === 'object') scenesObj = obj.scenes;
   } catch {
     /* 非严格 JSON 时仅用 token 信息 */
@@ -183,7 +184,11 @@ async function activate(context) {
   watcher.onDidDelete(() => rebuildIndex());
   context.subscriptions.push(watcher);
 
-  const selector = { language: 'json', pattern: MAP_PATTERN };
+  // 地图已关联为 jsonc（支持注释），同时覆盖 json/jsonc 以兼容不同编辑器设置
+  const selector = [
+    { language: 'jsonc', pattern: MAP_PATTERN },
+    { language: 'json', pattern: MAP_PATTERN },
+  ];
 
   // 定义跳转（Ctrl+Click / F12）
   context.subscriptions.push(
