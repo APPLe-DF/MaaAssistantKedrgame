@@ -119,13 +119,21 @@ export default hopeTheme({
               "any-scene.md",
               {
                 text: "任务",
-            prefix: "tasks/",
+                prefix: "tasks/",
                 collapsible: true,
                 children: [
                   "start-game.md",
                   "award.md",
                   "auto-battle.md",
                   "auto-sweep.md",
+                ],
+              },
+              {
+                text: "Custom",
+                prefix: "custom/",
+                collapsible: true,
+                children: [
+                  "scene-jump.md",
                 ],
               },
             ],
@@ -271,13 +279,21 @@ export default hopeTheme({
               "any-scene.md",
               {
                 text: "Tasks",
-            prefix: "tasks/",
+                prefix: "tasks/",
                 collapsible: true,
                 children: [
                   "start-game.md",
                   "award.md",
                   "auto-battle.md",
                   "auto-sweep.md",
+                ],
+              },
+              {
+                text: "Custom",
+                prefix: "custom/",
+                collapsible: true,
+                children: [
+                  "scene-jump.md",
                 ],
               },
             ],
