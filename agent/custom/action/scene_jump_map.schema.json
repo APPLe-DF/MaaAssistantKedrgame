@@ -18,7 +18,7 @@
         },
         "scenes": {
             "type": "object",
-            "description": "场景定义表：key 为场景名（应为 pipeline 中的状态识别节点名），value 为场景属性。更具体的场景应放在前面，以便优先识别。",
+            "description": "场景定义表：key 为场景名，value 为场景属性。更具体的场景应放在前面，以便优先识别；无 detect 的场景仅作 parent 使用。",
             "minProperties": 1,
             "propertyNames": {
                 "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
@@ -36,7 +36,7 @@
                     },
                     "detect": {
                         "type": "string",
-                        "description": "用于识别该场景的 pipeline 节点名；缺省时使用场景名本身"
+                        "description": "用于识别该场景的 pipeline 节点名；可选。缺省表示该场景仅作 parent 使用（抽象分组，不直接识别）"
                     },
                     "parent": {
                         "type": "string",
