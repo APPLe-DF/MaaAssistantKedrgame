@@ -89,15 +89,8 @@ function main() {
     }
   }
 
-  // 缺省 detect 的场景：detect 缺省为场景名，此时场景名必须能作为 pipeline 节点
-  for (const name of sceneNames) {
-    const hasDetect = toks.some(
-      (x) => !x.isKey && x.segments.length === 3 && x.segments[0] === 'scenes' && x.segments[1] === name && x.segments[2] === 'detect'
-    );
-    if (!hasDetect && !index.has(name)) {
-      missing.push({ ref: `scenes.${name}`, node: name, why: '缺省 detect 的场景名须为 pipeline 节点' });
-    }
-  }
+  // 缺省 detect 的场景：视为仅作 parent 的抽象场景，不要求 pipeline 节点
+
 
   console.log(`引用总数: ${refCount}`);
   if (missing.length) {

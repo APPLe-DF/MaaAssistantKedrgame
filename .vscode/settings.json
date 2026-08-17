@@ -46,7 +46,8 @@
         "__pycache__": true
     },
     "files.associations": {
-        "**/assets/**/*.json": "jsonc"
+        "**/assets/**/*.json": "jsonc",
+        "**/agent/custom/action/scene_jump_map.json": "jsonc"
     },
     "[json][jsonc]": {
         "editor.formatOnSave": true,
