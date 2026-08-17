@@ -1,0 +1,130 @@
+{
+    "$doc": "场景跳转关系表，供 SceneJump custom action 使用。scenes 记录场景（场景名即 pipeline 节点名），edges 记录跳转关系：from=当前场景, to=目标场景, cost=该一步跳转的成本(缺省1,数值越小越优先), jump=一步跳转要执行的 pipeline 节点（可多个,按序执行）, via=跳转过程中会短暂经过且无需额外操作的中间场景。路径规划用 Dijkstra 取总成本最小的路径。",
+    "scenes": {
+        "StartGame_icon": {
+            "desc": "启动游戏-图标界面",
+            "detect": "StartGame_icon"
+        },
+        "StartGame": {
+            "desc": "启动游戏-图标界面",
+            "detect": "StartGame_ClickStart"
+        },
+        "DailyAward": {
+            "desc": "每日奖励界面",
+            "detect": "Award_DailyAward_OCR"
+        },
+        "MonthlyPlan": {
+            "desc": "月卡",
+            "detect": "Award_DailyAward_MonthlyPlan"
+        },
+        "MainMenu": {
+            "desc": "主界面",
+            "detect": "Status_In_MainMenu"
+        },
+        "Loading_Screen": {
+            "desc": "加载界面",
+            "detect": "Status_Loading_Screen"
+        },
+        "Combat": {
+            "desc": "出击界面",
+            "detect": "Status_In_Combat"
+        },
+        "Combat_MainStory": {
+            "desc": "出击-主线任务",
+            "detect": "UI_Combat_MainStory_selected",
+            "parent": "Combat"
+        },
+        "Combat_MaterialQuests": {
+            "desc": "出击-资源收集",
+            "detect": "UI_Combat_MaterialQuests_selected",
+            "parent": "Combat"
+        },
+        "Combat_SkillMaterial": {
+            "desc": "出击-技能演练",
+            "detect": "UI_Combat_SkillMaterial_selected",
+            "parent": "Combat"
+        },
+        "Status_In_Stage": {
+            "desc": "战斗中",
+            "detect": "Status_In_Stage"
+        }
+    },
+    "edges": [
+        {
+            "from": "StartGame_icon",
+            "to": "StartGame",
+            "cost": 1
+        },
+        {
+            "from": "StartGame",
+            "to": [
+                "MainMenu",
+                "DailyAward",
+                "MonthlyPlan"
+            ],
+            "cost": 1,
+            "jump": [
+                "StartGame_ClickStart"
+            ]
+        },
+        {
+            "from": "DailyAward",
+            "to": [
+                "MainMenu",
+                "MonthlyPlan"
+            ],
+            "cost": 1,
+            "jump": [
+                "Award_DailyAward_Click:Get"
+            ]
+        },
+        {
+            "from": "MonthlyPlan",
+            "to": "MainMenu",
+            "cost": 1,
+            "jump": [
+                "Award_DailyAward_MonthlyPlan"
+            ]
+        },
+        {
+            "from": "MainMenu",
+            "to": "Combat_MainStory",
+            "cost": 1,
+            "jump": [
+                "UI_MainMenu_combat"
+            ]
+        },
+        {
+            "from": "Combat",
+            "to": "Combat_MainStory",
+            "cost": 1,
+            "jump": [
+                "UI_Combat_MainStory"
+            ]
+        },
+        {
+            "from": "Combat",
+            "to": "Combat_MaterialQuests",
+            "cost": 1,
+            "jump": [
+                "UI_Combat_MaterialQuests"
+            ]
+        },
+        {
+            "from": "Combat",
+            "to": "Combat_SkillMaterial",
+            "cost": 1,
+            "jump": [
+                "UI_Combat_SkillMaterial"
+            ]
+        },
+        {
+            "from": "Combat",
+            "to": "MainMenu",
+            "cost": 1,
+            "jump": [
+                "UI_Common_HomeButton"
+            ]
+        }
+    ]
+}

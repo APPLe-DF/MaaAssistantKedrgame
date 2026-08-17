@@ -10,7 +10,5 @@ title: 任务与节点
 
 1. [通用节点](./common-nodes)
 2. [万能跳转](./any-scene-main-menu)
-3. [开始游戏](./start-game)
-4. [领取奖励](./award)
-5. [自动战斗](./auto-battle)
-6. [自动刷本](./auto-sweep)
+3. [任务](./tasks/)
+4. [Custom](./custom/)

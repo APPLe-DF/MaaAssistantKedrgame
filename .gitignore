@@ -464,3 +464,9 @@ pyvenv.cfg
 # GitHub Copilot Skill
 
 .github/skills
+
+# MAK SceneJump 工作区扩展白名单（放行本扩展；放在末尾以覆盖 Lib/ 等更早的大小写不敏感规则）
+!.vscode/extensions/
+.vscode/extensions/*
+!.vscode/extensions/maak-scene-jump/
+!.vscode/extensions/maak-scene-jump/**
