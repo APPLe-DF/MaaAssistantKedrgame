@@ -1,0 +1,45 @@
+{
+    "task": [
+        {
+            "name": "Award_Activity_1",
+            "label": "$task.Award_Activity_1.label",
+            "entry": "Award_Activity_1_Main",
+            "description": "$task.Award_Activity_1.desc",
+            "option": [
+                "Award_Activity_1_DailyAward"
+            ],
+            "group": [
+                "Activity"
+            ],
+            "controller": [
+                "ADB"
+            ]
+        }
+    ],
+    "option": {
+        "Award_Activity_1_DailyAward": {
+            "label": "$option.Award_Activity_1_DailyAward.label",
+            "description": "$option.Award_Activity_1_DailyAward.description",
+            "type": "switch",
+            "default_case": "Yes",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "Award_Activity_1_DailyAward": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "Award_Activity_1_DailyAward": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

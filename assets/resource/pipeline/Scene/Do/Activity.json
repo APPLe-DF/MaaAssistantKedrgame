@@ -1,12 +1,15 @@
 {
     "AnySceneEnter_Activity_1": {
         "desc": "任意场景进入耀斑活动首页",
-        "next": [
-            "Status_In_Activity_YaoBanEnter",
-            "[JumpBack]SceneDo_Click_Activity_YaoBanEnter",
-            "[JumpBack]Status_Loading_Screen",
-            "[JumpBack]AnySceneEnter_MainMenu"
-        ]
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "SceneJump",
+                "custom_action_param": {
+                    "target": "Activity_1_Homepage"
+                }
+            }
+        }
     },
     "SceneDo_Click_Activity_YaoBanEnter": {
         "desc": "点击耀斑活动主页进入按钮",

@@ -70,5 +70,52 @@
                 ]
             }
         }
+    },
+    "UI_Activity_YaoBan_Field": {
+        "desc": "耀斑活动UI-Field",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Field.png", // [1108,93,142,26]
+                "roi": [
+                    1103,
+                    88,
+                    152,
+                    36
+                ],
+                "green_mask": true
+            }
+        }
+    },
+    "UI_Activity_YaoBan_DailyAward_sign": {
+        "desc": "耀斑活动UI-DailyAward",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/DailyAward_Sign.png", // [360,80,570,90]
+                "roi": [
+                    355,
+                    75,
+                    580,
+                    100
+                ]
+            }
+        }
+    },
+    "UI_Activity_YaoBan_Task_sign": {
+        "desc": "耀斑活动UI-Task",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Task_Sign.png", // [70,500,390,80]
+                "roi": [
+                    65,
+                    495,
+                    400,
+                    90
+                ],
+                "green_mask": true
+            }
+        }
     }
 }
