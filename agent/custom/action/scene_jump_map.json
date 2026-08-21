@@ -89,6 +89,10 @@
         "Activity_1_Task": {
             "desc": "活动1-Task",
             "detect": "UI_Activity_YaoBan_Task_sign"
+        },
+        "Activity_1_Shop": {
+            "desc": "活动1-Shop",
+            "detect": "UI_Activity_YaoBan_Shop_sign"
         }
     },
     "edges": [
@@ -230,6 +234,14 @@
         },
         {
             "from": "Activity_1_Task",
+            "to": "Activity_1_Homepage",
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseBackButton"
+            ]
+        },
+        {
+            "from": "Activity_1_Shop",
             "to": "Activity_1_Homepage",
             "cost": 1,
             "jump": [

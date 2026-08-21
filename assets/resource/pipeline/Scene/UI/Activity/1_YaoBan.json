@@ -87,6 +87,21 @@
             }
         }
     },
+    "UI_Activity_YaoBan_Shop": {
+        "desc": "耀斑活动UI-Shop",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Shop.png", // [75,440,185,175]
+                "roi": [
+                    70,
+                    435,
+                    190,
+                    180
+                ]
+            }
+        }
+    },
     "UI_Activity_YaoBan_DailyAward_sign": {
         "desc": "耀斑活动UI-DailyAward",
         "recognition": {
@@ -115,6 +130,21 @@
                     90
                 ],
                 "green_mask": true
+            }
+        }
+    },
+    "UI_Activity_YaoBan_Shop_sign": {
+        "desc": "耀斑活动UI-Shop",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Shop_Sign.png", // [30,500,200,40]
+                "roi": [
+                    25,
+                    495,
+                    210,
+                    50
+                ]
             }
         }
     }
