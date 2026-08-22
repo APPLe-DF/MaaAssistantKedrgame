@@ -1,0 +1,67 @@
+{
+    "task": [
+        {
+            "name": "AutoSweep_Activity_1",
+            "label": "$task.AutoSweep_Activity_1.label",
+            "entry": "AutoSweep_Activity_1_Main",
+            "description": "$task.AutoSweep_Activity_1.desc",
+            "option": [
+                "AutoSweep_Activity_1_Stage"
+            ],
+            "group": [
+                "Activity"
+            ],
+            "controller": [
+                "ADB"
+            ]
+        }
+    ],
+    "option": {
+        "AutoSweep_Activity_1_Stage": {
+            "label": "$option.AutoSweep_Activity_1_Stage.label",
+            "description": "$option.AutoSweep_Activity_1_Stage.description",
+            "type": "checkbox",
+            "default_case": [
+                "EX2-1"
+            ],
+            "cases": [
+                {
+                    "name": "EX2-1",
+                    "label": "EX2-1",
+                    "pipeline_override": {
+                        "AutoSweep_Activity_1_Stage_EX2_1": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "EX2-2",
+                    "label": "EX2-2",
+                    "pipeline_override": {
+                        "AutoSweep_Activity_1_Stage_EX2_2": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "EX3-1",
+                    "label": "EX3-1",
+                    "pipeline_override": {
+                        "AutoSweep_Activity_1_Stage_EX3_1": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "EX4-1",
+                    "label": "EX4-1",
+                    "pipeline_override": {
+                        "AutoSweep_Activity_1_Stage_EX4_1": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

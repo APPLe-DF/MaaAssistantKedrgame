@@ -377,5 +377,24 @@
                 "threshold": 0.96
             }
         }
+    },
+    "UI_Combat_StageMap_TextMask": {
+        "desc": "选关地图-关卡文本颜色遮罩（OCR color_filter 前置二值化）",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "method": 4,
+                "lower": [
+                    168,
+                    159,
+                    146
+                ],
+                "upper": [
+                    255,
+                    255,
+                    255
+                ]
+            }
+        }
     }
 }

@@ -1,0 +1,18 @@
+{
+    "task": [
+        {
+            "name": "Shop_Activity_1",
+            "label": "$task.Shop_Activity_1.label",
+            "entry": "Shop_Activity_1_Main",
+            "description": "$task.Shop_Activity_1.desc",
+            "option": [],
+            "group": [
+                "Activity"
+            ],
+            "controller": [
+                "ADB"
+            ]
+        }
+    ],
+    "option": {}
+}

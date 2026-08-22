@@ -15,6 +15,10 @@
             "desc": "加载界面",
             "detect": "Status_Loading_Screen"
         },
+        "GetItem": {
+            "desc": "获得物品",
+            "detect": "UI_Common_GetItem"
+        },
         "Status_In_Stage": {
             "desc": "战斗中",
             "detect": "Status_In_Stage"
@@ -63,6 +67,32 @@
             "desc": "出击-技能演练",
             "detect": "UI_Combat_SkillMaterial_selected",
             "parent": "Combat"
+        },
+        // -----
+        // region 活动1：耀斑
+        // -----
+        "Activity_1": {
+            "desc": "活动1"
+        },
+        "Activity_1_Homepage": {
+            "desc": "活动1-首页",
+            "detect": "Status_In_Activity_YaoBanEnter"
+        },
+        "Activity_1_Field": {
+            "desc": "活动1-Field",
+            "detect": "UI_Activity_YaoBan_Field"
+        },
+        "Activity_1_DailyAward": {
+            "desc": "活动1-DailyAward",
+            "detect": "UI_Activity_YaoBan_DailyAward_sign"
+        },
+        "Activity_1_Task": {
+            "desc": "活动1-Task",
+            "detect": "UI_Activity_YaoBan_Task_sign"
+        },
+        "Activity_1_Shop": {
+            "desc": "活动1-Shop",
+            "detect": "UI_Activity_YaoBan_Shop_sign"
         }
     },
     "edges": [
@@ -78,6 +108,14 @@
             ]
         },
         {
+            "from": "GetItem",
+            "to": "MainMenu",
+            "cost": 1,
+            "jump": [
+                "SceneDo_GetItem"
+            ]
+        },
+        {
             "from": "StartGame_icon",
             "to": "StartGame",
             "cost": 1
@@ -87,7 +125,8 @@
             "to": [
                 "MainMenu",
                 "DailyAward",
-                "MonthlyPlan"
+                "MonthlyPlan",
+                "GetItem"
             ],
             "cost": 1,
             "jump": [
@@ -98,7 +137,8 @@
             "from": "DailyAward",
             "to": [
                 "MainMenu",
-                "MonthlyPlan"
+                "MonthlyPlan",
+                "GetItem"
             ],
             "cost": 1,
             "jump": [
@@ -107,7 +147,10 @@
         },
         {
             "from": "MonthlyPlan",
-            "to": "MainMenu",
+            "to": [
+                "MainMenu",
+                "GetItem"
+            ],
             "cost": 1,
             "jump": [
                 "Award_DailyAward_MonthlyPlan"
@@ -150,7 +193,59 @@
             "to": "MainMenu",
             "cost": 1,
             "jump": [
-                "UI_Common_HomeButton"
+                "SceneDo_PauseHomeButton"
+            ]
+        },
+        // -----
+        // region 活动1：耀斑
+        // -----
+        {
+            "from": "Activity_1",
+            "to": "MainMenu",
+            "cost": 10,
+            "jump": [
+                "SceneDo_PauseHomeButton"
+            ],
+            "via": [
+                "Loading_Screen"
+            ]
+        },
+        {
+            "from": "Activity_1_Field",
+            "to": "Activity_1_Homepage",
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseBackButton"
+            ]
+        },
+        {
+            "from": "Activity_1_Homepage",
+            "to": "Activity_1_Field",
+            "cost": 1,
+            "jump": []
+        },
+        {
+            "from": "Activity_1_DailyAward",
+            "to": "Activity_1_Homepage",
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseBackButton"
+            ]
+        },
+        {
+            "from": "Activity_1_Task",
+            "to": "Activity_1_Homepage",
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseBackButton"
+            ]
+        },
+        {
+            "from": "Activity_1_Shop",
+            "to": "Activity_1_Homepage",
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseBackButton"
             ]
         }
     ]

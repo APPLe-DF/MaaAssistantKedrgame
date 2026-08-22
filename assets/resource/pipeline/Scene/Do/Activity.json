@@ -1,0 +1,24 @@
+{
+    "AnySceneEnter_Activity_1": {
+        "desc": "任意场景进入耀斑活动首页",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "SceneJump",
+                "custom_action_param": {
+                    "target": "Activity_1_Homepage"
+                }
+            }
+        }
+    },
+    "SceneDo_Click_Activity_YaoBanEnter": {
+        "desc": "点击耀斑活动主页进入按钮",
+        "recognition": "And",
+        "all_of": [
+            "Status_In_MainMenu",
+            "UI_Activity_YaoBanEnter"
+        ],
+        "box_index": 1,
+        "action": "Click"
+    }
+}

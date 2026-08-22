@@ -8,6 +8,15 @@
         "action": "Click",
         "post_delay": 1000
     },
+    "SceneDo_PauseBackButton": {
+        "desc": "点击BACK按钮",
+        "recognition": "And",
+        "all_of": [
+            "UI_Common_BackButton"
+        ],
+        "action": "Click",
+        "post_delay": 1000
+    },
     "SceneDo_GetItem": {
         "desc": "获得物品",
         "recognition": "Or",

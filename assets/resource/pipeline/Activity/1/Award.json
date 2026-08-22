@@ -1,0 +1,32 @@
+{
+    "Award_Activity_1_Main": {
+        "desc": "耀斑奖励领取入口",
+        "next": [
+            "[JumpBack]Award_Activity_1_Sub_DailyAward",
+            "[JumpBack]Award_Activity_1_Sub_Task",
+            "Award_Activity_1_Finish"
+        ]
+    },
+    "Award_Activity_1_Sub_DailyAward": {
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_DailyAward"
+        ]
+    },
+    "Award_Activity_1_Sub_Task": {
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task"
+        ]
+    },
+    "Award_Activity_1_Finish": {
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "耀斑奖励领取任务完成！",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    }
+}

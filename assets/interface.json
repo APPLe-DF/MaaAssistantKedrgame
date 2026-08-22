@@ -61,6 +61,11 @@
             "name": "Daily",
             "label": "$group.Daily.label",
             "default_expand": true
+        },
+        {
+            "name": "Activity",
+            "label": "$group.Activity.label",
+            "default_expand": true
         }
     ],
     "task": [],
@@ -68,7 +73,10 @@
         "resource/tasks/StartGame.json",
         "resource/tasks/Award.json",
         "resource/tasks/AutoBattle.json",
-        "resource/tasks/AutoSweep.json"
+        "resource/tasks/AutoSweep.json",
+        "resource/tasks/Activity/1/Award.json",
+        "resource/tasks/Activity/1/AutoSweep.json",
+        "resource/tasks/Activity/1/Shop.json"
     ],
     "option": {},
     "title": "MAK v325.799 | 雪松小助手"

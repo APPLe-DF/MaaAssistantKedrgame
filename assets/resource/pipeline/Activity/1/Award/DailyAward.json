@@ -1,0 +1,66 @@
+{
+    "Award_Activity_1_DailyAward": {
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_DailyAward_Click:Enter",
+            "[JumpBack]AnySceneEnter_Activity_1"
+        ]
+    },
+    "Award_Activity_1_DailyAward_Click:Enter": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_DailyAward"
+        ],
+        "action": "Click",
+        "next": [
+            "Award_Activity_1_DailyAward:Get"
+        ]
+    },
+    "Award_Activity_1_DailyAward:Get": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_DailyAward_sign"
+        ],
+        "next": [
+            "Award_Activity_1_DailyAward_Click:Get",
+            "Award_Activity_1_DailyAward_Swipe"
+        ]
+    },
+    "Award_Activity_1_DailyAward_Click:Get": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "可领取"
+                ]
+            }
+        },
+        "action": "Click",
+        "next": [
+            "SceneDo_GetItem"
+        ]
+    },
+    "Award_Activity_1_DailyAward_Swipe": {
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    1010,
+                    325,
+                    105,
+                    25
+                ],
+                "end": [
+                    730,
+                    325,
+                    105,
+                    25
+                ],
+                "end_hold": 500
+            }
+        },
+        "next": [
+            "Award_Activity_1_DailyAward_Click:Get"
+        ]
+    }
+}

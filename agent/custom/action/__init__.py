@@ -1,6 +1,13 @@
 from importlib import import_module
 
-ACTION_MODULES = ("general", "sweep", "scene_jump")
+ACTION_MODULES = (
+    "general",
+    "sweep",
+    "scene_jump",
+    "stage_select",
+    "activity.1_sweep",
+    "activity.1_shop",
+)
 
 
 def register_all() -> None:

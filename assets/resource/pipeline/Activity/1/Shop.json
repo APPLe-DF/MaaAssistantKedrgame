@@ -1,0 +1,140 @@
+{
+    "Shop_Activity_1_Main": {
+        "desc": "耀斑购物入口",
+        "next": [
+            "[JumpBack]Shop_Activity_1",
+            "Shop_Activity_1_Finish"
+        ]
+    },
+    "Shop_Activity_1": {
+        "next": [
+            "Shop_Activity_1_Click:Enter",
+            "[JumpBack]AnySceneEnter_Activity_1"
+        ]
+    },
+    "Shop_Activity_1_Click:Enter": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_Shop"
+        ],
+        "action": "Click",
+        "next": [
+            "Shop_Activity_1_Click:Page2"
+        ]
+    },
+    "Shop_Activity_1_Click:Page2": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "定额保障"
+                ],
+                "roi": [
+                    560,
+                    125,
+                    115,
+                    35
+                ]
+            }
+        },
+        "action": "Click",
+        "next": []
+    },
+    "Shop_Activity_1_Manager": {
+        "desc": "耀斑活动-商店购物管理器（识别并购买当前展示的全部商品）",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "Shop_Activity_1_Manager"
+            }
+        }
+    },
+    "Shop_Activity_1_Sold": {
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "template": "UI/Activity/1/Shop_sold.png", // [545,465,125,85]
+                "roi": [
+                    330,
+                    180,
+                    925,
+                    430
+                ]
+            }
+        }
+    },
+    "Shop_Activity_1_Swipe": {
+        "action": {
+            "type": "Swipe",
+            "param": {
+                "begin": [
+                    1010,
+                    325,
+                    105,
+                    25
+                ],
+                "end": [
+                    730,
+                    325,
+                    105,
+                    25
+                ],
+                "end_hold": 500
+            }
+        }
+    },
+    "Shop_Activity_1_Confirm:Money": {
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    740,
+                    525,
+                    110,
+                    35
+                ],
+                "upper": [
+                    255,
+                    60,
+                    10
+                ],
+                "lower": [
+                    200,
+                    0,
+                    0
+                ],
+                "count": 100
+            }
+        }
+    },
+    "Shop_Activity_1_CloseInfo": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "点击空白区域关闭弹窗",
+                    "关闭弹窗"
+                ],
+                "roi": [
+                    550,
+                    610,
+                    180,
+                    40
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    },
+    "Shop_Activity_1_Finish": {
+        "focus": {
+            "Node.Recognition.Starting": {
+                "content": "任务完成！",
+                "display": [
+                    "log"
+                ]
+            }
+        }
+    }
+}
