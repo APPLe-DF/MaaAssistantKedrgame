@@ -328,5 +328,34 @@
                 "green_mask": true
             }
         }
+    },
+    "UI_MainMenu_in_maintenancearea": {
+        "desc": "主界面的资源派遣",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "UI_MainMenu_combatants",
+                    "UI_MainMenu_in_maintenancearea_OCR"
+                ]
+            }
+        }
+    },
+    "UI_MainMenu_in_maintenancearea_OCR": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "一键领取",
+                    "关闭"
+                ],
+                "roi": [
+                    840,
+                    625,
+                    430,
+                    70
+                ]
+            }
+        }
     }
 }
