@@ -49,6 +49,10 @@
             "desc": "主界面",
             "detect": "Status_In_MainMenu"
         },
+        "MainMenu_MaintenanceArea": {
+            "desc": "资源派遣（主界面）",
+            "detect": "UI_MainMenu_in_maintenancearea"
+        },
         "Combat": {
             "desc": "出击界面",
             "detect": "Status_In_Combat"
@@ -154,6 +158,14 @@
             "cost": 1,
             "jump": [
                 "Award_DailyAward_MonthlyPlan"
+            ]
+        },
+        {
+            "from": "MainMenu_MaintenanceArea",
+            "to": "MainMenu",
+            "cost": 1,
+            "jump": [
+                "SceneDo_MainMenu_ClickCenter"
             ]
         },
         {

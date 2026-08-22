@@ -12,5 +12,18 @@
             "[JumpBack]Award_DailyAward_Click:Get",
             "[JumpBack]Award_DailyAward_MonthlyPlan"
         ]
+    },
+    "SceneDo_MainMenu_ClickCenter": {
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    325,
+                    200,
+                    500,
+                    300
+                ]
+            }
+        }
     }
 }
