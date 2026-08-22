@@ -6,7 +6,8 @@
             "entry": "Award_Activity_1_Main",
             "description": "$task.Award_Activity_1.desc",
             "option": [
-                "Award_Activity_1_DailyAward"
+                "Award_Activity_1_DailyAward",
+                "Award_Activity_1_Task"
             ],
             "group": [
                 "Activity"
@@ -26,7 +27,7 @@
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "Award_Activity_1_DailyAward": {
+                        "Award_Activity_1_Sub_DailyAward": {
                             "enabled": true
                         }
                     }
@@ -34,8 +35,83 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "Award_Activity_1_DailyAward": {
+                        "Award_Activity_1_Sub_DailyAward": {
                             "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "Award_Activity_1_Task": {
+            "label": "$option.Award_Activity_1_Task.label",
+            "description": "$option.Award_Activity_1_Task.description",
+            "type": "switch",
+            "default_case": "Yes",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "Award_Activity_1_Sub_Task": {
+                            "enabled": true
+                        }
+                    },
+                    "option": [
+                        "Award_Activity_1_Task_option"
+                    ]
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "Award_Activity_1_Sub_Task": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "Award_Activity_1_Task_option": {
+            "label": "$option.Award_Activity_1_Task_option.label",
+            "type": "checkbox",
+            "default_case": [
+                "Daily",
+                "Weekly",
+                "Stage",
+                "Achievement"
+            ],
+            "cases": [
+                {
+                    "name": "Daily",
+                    "label": "$option.Award_Activity_1_Task_option_Daily.label",
+                    "pipeline_override": {
+                        "Award_Activity_1_Task_Get:Daily": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "Weekly",
+                    "label": "$option.Award_Activity_1_Task_option_Weekly.label",
+                    "pipeline_override": {
+                        "Award_Activity_1_Task_Get:Weekly": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "Stage",
+                    "label": "$option.Award_Activity_1_Task_option_Stage.label",
+                    "pipeline_override": {
+                        "Award_Activity_1_Task_Get:Stage": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "Achievement",
+                    "label": "$option.Award_Activity_1_Task_option_Achievement.label",
+                    "pipeline_override": {
+                        "Award_Activity_1_Task_Get:Achievement": {
+                            "enabled": true
                         }
                     }
                 }

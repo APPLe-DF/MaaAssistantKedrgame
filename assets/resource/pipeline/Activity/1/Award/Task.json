@@ -1,0 +1,180 @@
+{
+    "Award_Activity_1_Task": {
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task_Click:Enter",
+            "[JumpBack]AnySceneEnter_Activity_1"
+        ]
+    },
+    "Award_Activity_1_Task_Click:Enter": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_Task"
+        ],
+        "action": "Click",
+        "next": [
+            "Award_Activity_1_Task:Get"
+        ]
+    },
+    "Award_Activity_1_Task:Get": {
+        "recognition": "And",
+        "all_of": [
+            "UI_Activity_YaoBan_Task_sign"
+        ],
+        "next": [
+            "[JumpBack]Award_Activity_1_Task_Get:Daily",
+            "[JumpBack]Award_Activity_1_Task_Get:Weekly",
+            "[JumpBack]Award_Activity_1_Task_Get:Stage",
+            "[JumpBack]Award_Activity_1_Task_Get:Achievement",
+            "Award_Activity_1_Task_End"
+        ]
+    },
+    "Award_Activity_1_Task_Get:Daily": {
+        "enabled": false,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "每日任务"
+                ],
+                "roi": [
+                    510,
+                    105,
+                    180,
+                    45
+                ]
+            }
+        },
+        "action": "Click",
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task_Check:T",
+            "Award_Activity_1_Task_Check:F"
+        ]
+    },
+    "Award_Activity_1_Task_Get:Weekly": {
+        "enabled": false,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "每周任务"
+                ],
+                "roi": [
+                    700,
+                    105,
+                    180,
+                    45
+                ]
+            }
+        },
+        "action": "Click",
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task_Check:T",
+            "Award_Activity_1_Task_Check:F"
+        ]
+    },
+    "Award_Activity_1_Task_Get:Stage": {
+        "enabled": false,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "关卡进度"
+                ],
+                "roi": [
+                    890,
+                    105,
+                    180,
+                    45
+                ]
+            }
+        },
+        "action": "Click",
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task_Check:T",
+            "Award_Activity_1_Task_Check:F"
+        ]
+    },
+    "Award_Activity_1_Task_Get:Achievement": {
+        "enabled": false,
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "成就任务"
+                ],
+                "roi": [
+                    1080,
+                    105,
+                    180,
+                    45
+                ]
+            }
+        },
+        "action": "Click",
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task_Check:T",
+            "Award_Activity_1_Task_Check:F"
+        ]
+    },
+    "Award_Activity_1_Task_Check:T": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "已完成多项任务"
+                ],
+                "roi": [
+                    65,
+                    650,
+                    270,
+                    55
+                ]
+            }
+        },
+        "next": [
+            "Award_Activity_1_Task_Click:Get"
+        ]
+    },
+    "Award_Activity_1_Task_Check:F": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "当前没有完成的任务"
+                ],
+                "roi": [
+                    65,
+                    650,
+                    270,
+                    55
+                ]
+            }
+        }
+    },
+    "Award_Activity_1_Task_Click:Get": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "一键领取"
+                ],
+                "roi": [
+                    1060,
+                    650,
+                    200,
+                    55
+                ]
+            }
+        },
+        "action": "Click",
+        "next": [
+            "SceneDo_GetItem"
+        ]
+    },
+    "Award_Activity_1_Task_End": {}
+}

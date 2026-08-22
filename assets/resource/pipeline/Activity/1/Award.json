@@ -3,6 +3,7 @@
         "desc": "耀斑奖励领取入口",
         "next": [
             "[JumpBack]Award_Activity_1_Sub_DailyAward",
+            "[JumpBack]Award_Activity_1_Sub_Task",
             "Award_Activity_1_Finish"
         ]
     },
@@ -10,6 +11,12 @@
         "max_hit": 1,
         "next": [
             "Award_Activity_1_DailyAward"
+        ]
+    },
+    "Award_Activity_1_Sub_Task": {
+        "max_hit": 1,
+        "next": [
+            "Award_Activity_1_Task"
         ]
     },
     "Award_Activity_1_Finish": {
