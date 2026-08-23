@@ -2,8 +2,7 @@
     "Shop_Activity_1_Main": {
         "desc": "耀斑购物入口",
         "next": [
-            "[JumpBack]Shop_Activity_1",
-            "Shop_Activity_1_Finish"
+            "Shop_Activity_1"
         ]
     },
     "Shop_Activity_1": {
@@ -19,7 +18,43 @@
         ],
         "action": "Click",
         "next": [
+            "[JumpBack]Shop_Activity_1_Sub:Page1",
+            "[JumpBack]Shop_Activity_1_Sub:Page2",
+            "Shop_Activity_1_Finish"
+        ]
+    },
+    "Shop_Activity_1_Sub:Page1": {
+        "enabled": false,
+        "max_hit": 1,
+        "next": [
+            "Shop_Activity_1_Click:Page1"
+        ]
+    },
+    "Shop_Activity_1_Sub:Page2": {
+        "enabled": false,
+        "max_hit": 1,
+        "next": [
             "Shop_Activity_1_Click:Page2"
+        ]
+    },
+    "Shop_Activity_1_Click:Page1": {
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "强行保障"
+                ],
+                "roi": [
+                    370,
+                    125,
+                    115,
+                    35
+                ]
+            }
+        },
+        "action": "Click",
+        "next": [
+            "Shop_Activity_1_Manager"
         ]
     },
     "Shop_Activity_1_Click:Page2": {
@@ -38,7 +73,9 @@
             }
         },
         "action": "Click",
-        "next": []
+        "next": [
+            "Shop_Activity_1_Manager"
+        ]
     },
     "Shop_Activity_1_Manager": {
         "desc": "耀斑活动-商店购物管理器（识别并购买当前展示的全部商品）",
@@ -68,16 +105,16 @@
             "type": "Swipe",
             "param": {
                 "begin": [
-                    1010,
+                    1150,
                     325,
-                    105,
-                    25
+                    80,
+                    100
                 ],
                 "end": [
-                    730,
+                    430,
                     325,
-                    105,
-                    25
+                    80,
+                    100
                 ],
                 "end_hold": 500
             }
