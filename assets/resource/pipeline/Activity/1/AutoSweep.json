@@ -27,15 +27,15 @@
     },
     "AutoSweep_Activity_1_StageLoop": {
         "desc": "耀斑自动扫荡：跳板节点（逐个扫荡已选关卡，max_hit=1 保证每关只扫一次）",
-        "timeout": 1000,
+        "timeout": 10000,
         "next": [
             "[JumpBack]AutoSweep_Click_Stage_finish",
             "[JumpBack]SceneDo_GetItem",
             "[JumpBack]Status_Loading_Screen",
-            "[JumpBack]AutoSweep_Activity_1_Stage_EX2_1",
-            "[JumpBack]AutoSweep_Activity_1_Stage_EX2_2",
-            "[JumpBack]AutoSweep_Activity_1_Stage_EX3_1",
             "[JumpBack]AutoSweep_Activity_1_Stage_EX4_1",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX3_1",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX2_2",
+            "[JumpBack]AutoSweep_Activity_1_Stage_EX2_1",
             "AutoSweep_Activity_1_Finish"
         ]
     },
