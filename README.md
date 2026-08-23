@@ -107,8 +107,8 @@
 
 <a href="https://www.star-history.com/?repos=Hollow-YK%2FMaaAssistantKedrgame&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Hollow-YK/MaaAssistantKedrgame&type=date&theme=dark&legend=top-left&sealed_token=UFq_DJTzmI8FXQevxAgxIaUYCX2YVNY2l6jPfrpu1U1HYXEveXal1ydXsW5tpJJPAqqwMLc-a-ve0JyhXz8B0F2KU2DPG_3MvqiDBRHZW7RxulzlcQbxcKI-13COk_RaCnI7jtqrr_RjEjXmgo1bn-mYmh_6jIoJGIXyHEJT9ojZow8bsoLde1D69OFs" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Hollow-YK/MaaAssistantKedrgame&type=date&legend=top-left&sealed_token=UFq_DJTzmI8FXQevxAgxIaUYCX2YVNY2l6jPfrpu1U1HYXEveXal1ydXsW5tpJJPAqqwMLc-a-ve0JyhXz8B0F2KU2DPG_3MvqiDBRHZW7RxulzlcQbxcKI-13COk_RaCnI7jtqrr_RjEjXmgo1bn-mYmh_6jIoJGIXyHEJT9ojZow8bsoLde1D69OFs" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Hollow-YK/MaaAssistantKedrgame&type=date&legend=top-left&sealed_token=UFq_DJTzmI8FXQevxAgxIaUYCX2YVNY2l6jPfrpu1U1HYXEveXal1ydXsW5tpJJPAqqwMLc-a-ve0JyhXz8B0F2KU2DPG_3MvqiDBRHZW7RxulzlcQbxcKI-13COk_RaCnI7jtqrr_RjEjXmgo1bn-mYmh_6jIoJGIXyHEJT9ojZow8bsoLde1D69OFs" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Hollow-YK/MaaAssistantKedrgame&type=date&theme=dark&legend=top-left&sealed_token=3N5qw_ntNUraaXt6xed_wSnk3_hUkpIe4vfyJmR1ol8PxrzoLQ194CMvE6hRzZhc8CvDZ-ysTFES_Xem1DmeN7-6Wj8Ncc1jgMK5oIzZxQppSXkMdEHPqA" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Hollow-YK/MaaAssistantKedrgame&type=date&legend=top-left&sealed_token=3N5qw_ntNUraaXt6xed_wSnk3_hUkpIe4vfyJmR1ol8PxrzoLQ194CMvE6hRzZhc8CvDZ-ysTFES_Xem1DmeN7-6Wj8Ncc1jgMK5oIzZxQppSXkMdEHPqA" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Hollow-YK/MaaAssistantKedrgame&type=date&legend=top-left&sealed_token=3N5qw_ntNUraaXt6xed_wSnk3_hUkpIe4vfyJmR1ol8PxrzoLQ194CMvE6hRzZhc8CvDZ-ysTFES_Xem1DmeN7-6Wj8Ncc1jgMK5oIzZxQppSXkMdEHPqA" />
  </picture>
 </a>
