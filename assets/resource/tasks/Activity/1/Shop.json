@@ -21,7 +21,6 @@
             "label": "$option.Shop_Activity_1_option.label",
             "type": "checkbox",
             "default_case": [
-                "1",
                 "2"
             ],
             "cases": [
