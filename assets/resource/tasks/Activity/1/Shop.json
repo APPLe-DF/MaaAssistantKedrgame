@@ -5,7 +5,9 @@
             "label": "$task.Shop_Activity_1.label",
             "entry": "Shop_Activity_1_Main",
             "description": "$task.Shop_Activity_1.desc",
-            "option": [],
+            "option": [
+                "Shop_Activity_1_option"
+            ],
             "group": [
                 "Activity"
             ],
@@ -14,5 +16,34 @@
             ]
         }
     ],
-    "option": {}
+    "option": {
+        "Shop_Activity_1_option": {
+            "label": "$option.Shop_Activity_1_option.label",
+            "type": "checkbox",
+            "default_case": [
+                "1",
+                "2"
+            ],
+            "cases": [
+                {
+                    "name": "1",
+                    "label": "$option.Shop_Activity_1_option_1.label",
+                    "pipeline_override": {
+                        "Shop_Activity_1_Sub:Page1": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "label": "$option.Shop_Activity_1_option_2.label",
+                    "pipeline_override": {
+                        "Shop_Activity_1_Sub:Page2": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        }
+    }
 }
