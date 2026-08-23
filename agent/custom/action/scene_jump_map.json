@@ -223,6 +223,17 @@
             ]
         },
         {
+            "from": "MainMenu",
+            "to": "Activity_1_Homepage",
+            "cost": 10,
+            "jump": [
+                "SceneDo_Click_Activity_YaoBanEnter"
+            ],
+            "via": [
+                "Loading_Screen"
+            ]
+        },
+        {
             "from": "Activity_1_Field",
             "to": "Activity_1_Homepage",
             "cost": 1,
