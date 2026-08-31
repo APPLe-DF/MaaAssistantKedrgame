@@ -137,6 +137,15 @@
                 "threshold": 0.8
             }
         },
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "PVP_Log",
+                "custom_action_param": {
+                    "content": "[PVP] 今日挑战次数已用完"
+                }
+            }
+        },
         "next": [
             "PVP_Click:MainMenu"
         ],
@@ -144,7 +153,6 @@
             "Node.PipelineNode.Starting": {
                 "content": "今日挑战次数已用完",
                 "display": [
-                    "log",
                     "toast"
                 ]
             }

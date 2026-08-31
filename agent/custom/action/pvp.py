@@ -7,7 +7,7 @@ from maa.agent.agent_server import AgentServer
 from maa.context import Context
 from maa.custom_action import CustomAction
 
-from .general import parse_params
+from .general import log_message, parse_params
 
 # agent 进程由 MaaFW 按任务逐次启动，进程内仅存在单一 tasker；
 # 此模块级变量天然限定在单次任务生命周期内，无跨任务干扰风险。
@@ -48,12 +48,12 @@ class InitPVPBattleCount(CustomAction):
 
         target = _to_int(params.get("target_count"))
         if target is None:
-            print(f"[PVP] InitPVPBattleCount: target_count 必须是整数，得到: {params.get('target_count')!r}")
+            log_message(f"[PVP] InitPVPBattleCount: target_count 必须是整数，得到: {params.get('target_count')!r}")
             return CustomAction.RunResult(success=False)
 
         global _remaining
         _remaining = target
-        print(f"[PVP] 剩余战斗次数: {target}")
+        log_message(f"[PVP] 剩余战斗次数: {target}")
         return CustomAction.RunResult(success=True)
 
 
@@ -70,13 +70,13 @@ class CheckPVPBattleCount(CustomAction):
     def _run(self, context: Context, argv: CustomAction.RunArg) -> CustomAction.RunResult:
         global _remaining
         if _remaining is None:
-            print("[PVP] CheckPVPBattleCount: remaining 未初始化，请先调用 InitPVPBattleCount")
+            log_message("[PVP] CheckPVPBattleCount: remaining 未初始化，请先调用 InitPVPBattleCount")
             return CustomAction.RunResult(success=False)
 
         _remaining -= 1
 
         if _remaining <= 0:
-            print("[PVP] 战斗次数已用完，返回主界面")
+            log_message("[PVP] 战斗次数已用完，返回主界面")
             _remaining = None
             context.override_pipeline(
                 {
@@ -108,5 +108,31 @@ class CheckPVPBattleCount(CustomAction):
                 },
             }
         )
-        print(f"[PVP] 剩余战斗次数: {_remaining}")
+        log_message(f"[PVP] 剩余战斗次数: {_remaining}")
         return CustomAction.RunResult(success=True)
+
+
+@AgentServer.custom_action("PVP_Log")
+class PVPLog(CustomAction):
+    """输出 PVP 任务日志到 agent 通道（VSC 插件终端 / MXU / MFAAvalonia 面板）。
+
+    参数：
+    - content: 要输出的内容（必填）
+
+    仅通过 agent stderr（``info:`` 前缀格式）输出，不产生 focus 通知；与 focus 互补：
+    focus 负责 GUI 侧展示（toast/log），本动作负责 agent 日志通道的可见性。
+    """
+
+    def run(self, context: Context, argv: CustomAction.RunArg) -> CustomAction.RunResult:
+        try:
+            params = parse_params(argv.custom_action_param)
+            content = params.get("content")
+            if not content:
+                log_message("[PVP_Log] 缺少 content 参数")
+                return CustomAction.RunResult(success=False)
+            log_message(content)
+            return CustomAction.RunResult(success=True)
+        except Exception:
+            # 异常必须显式返回失败，否则会被 ctypes 静默忽略导致误判成功
+            traceback.print_exc()
+            return CustomAction.RunResult(success=False)

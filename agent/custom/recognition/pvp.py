@@ -7,7 +7,7 @@ from maa.context import Context
 from maa.custom_recognition import CustomRecognition
 from maa.pipeline import JOCR, JRecognitionType
 
-from ..action.general import parse_params
+from ..action.general import log_message, parse_params
 
 
 def _ocr_text(detail) -> str:
@@ -49,7 +49,7 @@ class SelectPVPOpponent(CustomRecognition):
         only_rec = params.get("only_rec", True)
 
         if len(rois) != 3 or len(click_positions) != 3:
-            print(
+            log_message(
                 f"[PVP] SelectPVPOpponent: 需要3个ROI和3个点击位置，得到 roi={len(rois)} click={len(click_positions)}"
             )
             return None
@@ -68,19 +68,19 @@ class SelectPVPOpponent(CustomRecognition):
             text = _ocr_text(detail)
             try:
                 value = float(text)
-                print(f"[PVP] 对手{i + 1} 等级: {value}")
+                log_message(f"[PVP] 对手{i + 1} 等级: {value}")
                 if best_value is None or value < best_value:
                     best_value = value
                     best_index = i
             except (ValueError, TypeError):
-                print(f"[PVP] 对手{i + 1} 无法识别等级: '{text}'")
+                log_message(f"[PVP] 对手{i + 1} 无法识别等级: '{text}'")
 
         if best_index < 0:
-            print("[PVP] SelectPVPOpponent: 未能识别任何对手的等级")
+            log_message("[PVP] SelectPVPOpponent: 未能识别任何对手的等级")
             return None
 
         click_x, click_y = click_positions[best_index]
-        print(
+        log_message(
             f"[PVP] 选择对手{best_index + 1} (等级最低: {best_value}), 点击位置: [{click_x}, {click_y}]"
         )
 
@@ -186,7 +186,7 @@ class ReadPVPResult(CustomRecognition):
         if protected:
             # 判定依据仅记 debug：结果文案会由下方 PVP_Click:ExitResult 的 focus 统一输出一次，
             # 避免同一条结果在识别器日志与节点 focus 中重复出现。
-            print("[PVP] 未识别到分数变化，判定为高级账号失败保护")
+            log_message("[PVP] 未识别到分数变化，判定为高级账号失败保护")
             result_msg = (
                 f"高账失败保护触发：本场不扣分，积分:{current_score or '-'} 排名:{current_rank or '-'}"
             )
