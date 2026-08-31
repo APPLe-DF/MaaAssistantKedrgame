@@ -97,6 +97,13 @@
         "Activity_1_Shop": {
             "desc": "活动1-Shop",
             "detect": "UI_Activity_YaoBan_Shop_sign"
+        },
+        // -----
+        // region 玩家对战
+        // -----
+        "PVP": {
+            "desc": "玩家对战界面",
+            "detect": "PVP_Verify:BattleInterface"
         }
     },
     "edges": [
@@ -269,6 +276,20 @@
             "cost": 1,
             "jump": [
                 "SceneDo_PauseBackButton"
+            ]
+        },
+        // -----
+        // region 玩家对战
+        // -----
+        {
+            "from": "PVP",
+            "to": "MainMenu",
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseHomeButton"
+            ],
+            "via": [
+                "Loading_Screen"
             ]
         }
     ]

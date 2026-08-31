@@ -22,7 +22,8 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 
 ### 入口与路由
 
-- `PVPMain`：任务入口。先尝试 `PVP_Click:Exercise`，未在主界面时通过 `[JumpBack]AnySceneEnter_MainMenu` 回到主界面后重试。
+- `PVPMain`：任务入口。先尝试 `PVP_Click:Exercise`（主界面直达），未在主界面时通过 `[JumpBack]PVP_Do:JumpToMain` 回到主界面后重试。
+- `PVP_Do:JumpToMain`：使用通用 `SceneJump`（`target: "MainMenu"`）从任意界面跳转回主界面；场景图 `scene_jump_map.json` 已包含 `PVP` 场景（`detect: PVP_Verify:BattleInterface`）与 `PVP → MainMenu` 边（`jump: SceneDo_PauseHomeButton`），因此从玩家对战界面重启任务也能正确返回。
 - `PVP_Click:Exercise`：复用 `UI_MainMenu_exercise`（主界面-对战）识别并点击入口。
 - `PVP_Verify:BattleInterface`：确认已进入玩家对战界面（`PVP/battle_interface.png`）。
 

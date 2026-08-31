@@ -3,8 +3,20 @@
         "desc": "玩家对战-入口：确保在主界面后进入对战",
         "next": [
             "PVP_Click:Exercise",
-            "[JumpBack]AnySceneEnter_MainMenu"
+            "[JumpBack]PVP_Do:JumpToMain"
         ]
+    },
+    "PVP_Do:JumpToMain": {
+        "desc": "任意界面跳转回主界面（SceneJump 通用跳转）",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "SceneJump",
+                "custom_action_param": {
+                    "target": "MainMenu"
+                }
+            }
+        }
     },
     "PVP_Click:Exercise": {
         "desc": "点击主界面-对战入口",
