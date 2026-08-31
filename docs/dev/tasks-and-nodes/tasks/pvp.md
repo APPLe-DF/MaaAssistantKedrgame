@@ -24,7 +24,7 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 
 - `PVPMain`：任务入口。先尝试 `PVP_Click:Exercise`（主界面直达），未在主界面时通过 `[JumpBack]PVP_Do:JumpToMain` 回到主界面后重试。
 - `PVP_Do:JumpToMain`：使用通用 `SceneJump`（`target: "MainMenu"`）从任意界面跳转回主界面；场景图 `scene_jump_map.json` 已包含 `PVP` 场景（`detect: PVP_Verify:BattleInterface`）与 `PVP → MainMenu` 边（`jump: SceneDo_PauseHomeButton`），以及编队界面场景 `Team`（`detect: AutoSweep_Click_Start2`，返回键 `SceneDo_PauseBackButton` 后可能落到 `MainMenu` 或 `PVP`），任意界面重启任务均能正确回主界面。
-- `PVP_Click:Exercise`：复用 `UI_MainMenu_exercise`（主界面-对战）识别并点击入口。
+- `PVP_Click:Exercise`：复用 `UI_MainMenu_exercise`（主界面-对战）识别并点击入口。点击后 `next` 列表中先尝试赛季重置候选 `PVP_Click:SeasonReset_Continue`（识别「点击任意处继续」提示），未命中时由该 next 列表继续尝试 `PVP_Verify:BattleInterface` 确认对战界面（回落发生在父节点 next 列表层面）。赛季重置时依次「点击继续 → 编辑 → 快速编队 → 人数确认 → 保存编队 → 进入布阵 → 保存部署位置」，链内节点均自带重试兜底，完成后回到 `PVP_Verify:BattleInterface` 正常流程。
 - `PVP_Verify:BattleInterface`：确认已进入玩家对战界面（`PVP/battle_interface.png`）。
 
 ### 选对手

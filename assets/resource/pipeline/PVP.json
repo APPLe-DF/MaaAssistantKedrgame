@@ -27,7 +27,206 @@
         "action": "Click",
         "post_delay": 2000,
         "next": [
+            "PVP_Click:SeasonReset_Continue",
             "PVP_Verify:BattleInterface"
+        ]
+    },
+    "PVP_Click:SeasonReset_Continue": {
+        "desc": "赛季重置：识别「点击任意处继续」提示并点击（并列候选；未命中时由上游 PVP_Click:Exercise 的 next 列表继续尝试确认对战界面；timeout 仅作用于本节点作为父节点评估自身 next 链的轮询预算，非候选未命中回落时间）",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "点击任意处继续"
+                ],
+                "roi": [
+                    552,
+                    640,
+                    176,
+                    31
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "action": "Click",
+        "next": [
+            "PVP_Check:SeasonReset_EnterFormation",
+            "PVP_Click:SeasonReset_Continue"
+        ]
+    },
+    "PVP_Check:SeasonReset_EnterFormation": {
+        "desc": "赛季重置：识别「进入布阵」确认在布阵界面，不做动作",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "进入布阵"
+                ],
+                "roi": [
+                    1078,
+                    659,
+                    97,
+                    27
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "next": [
+            "PVP_Click:SeasonReset_Edit",
+            "PVP_Check:SeasonReset_EnterFormation"
+        ]
+    },
+    "PVP_Click:SeasonReset_Edit": {
+        "desc": "赛季重置：识别「编辑」并点击进入编队界面",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "编辑"
+                ],
+                "roi": [
+                    265,
+                    141,
+                    54,
+                    29
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "action": "Click",
+        "next": [
+            "PVP_Click:SeasonReset_QuickFormation",
+            "PVP_Click:SeasonReset_Edit"
+        ]
+    },
+    "PVP_Click:SeasonReset_QuickFormation": {
+        "desc": "赛季重置：识别「快速编队」并点击",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "快速编队"
+                ],
+                "roi": [
+                    101,
+                    441,
+                    85,
+                    25
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "action": "Click",
+        "next": [
+            "PVP_Check:SeasonReset_FormationCount",
+            "PVP_Click:SeasonReset_QuickFormation"
+        ]
+    },
+    "PVP_Check:SeasonReset_FormationCount": {
+        "desc": "赛季重置：识别编队人数数字出现，不做动作",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "\\d"
+                ],
+                "roi": [
+                    203,
+                    561,
+                    22,
+                    18
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "next": [
+            "PVP_Click:SeasonReset_Save",
+            "PVP_Check:SeasonReset_FormationCount"
+        ]
+    },
+    "PVP_Click:SeasonReset_Save": {
+        "desc": "赛季重置：识别「保存」并点击保存编队",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "保存"
+                ],
+                "roi": [
+                    1140,
+                    442,
+                    41,
+                    22
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "action": "Click",
+        "next": [
+            "PVP_Click:SeasonReset_EnterFormation",
+            "PVP_Click:SeasonReset_Save"
+        ]
+    },
+    "PVP_Click:SeasonReset_EnterFormation": {
+        "desc": "赛季重置：识别「进入布阵」并点击进入布阵界面",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "进入布阵"
+                ],
+                "roi": [
+                    1078,
+                    659,
+                    97,
+                    27
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "action": "Click",
+        "next": [
+            "PVP_Click:SeasonReset_SavePosition",
+            "PVP_Click:SeasonReset_EnterFormation"
+        ]
+    },
+    "PVP_Click:SeasonReset_SavePosition": {
+        "desc": "赛季重置：识别「保存」确认保存部署位置界面，点击确认",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "expected": [
+                    "保存"
+                ],
+                "roi": [
+                    1153,
+                    626,
+                    49,
+                    26
+                ],
+                "only_rec": true,
+                "threshold": 0.8
+            }
+        },
+        "pre_delay": 500,
+        "action": "Click",
+        "next": [
+            "PVP_Verify:BattleInterface",
+            "PVP_Click:SeasonReset_SavePosition"
         ]
     },
     "PVP_Verify:BattleInterface": {
