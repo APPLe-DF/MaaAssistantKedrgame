@@ -179,16 +179,23 @@ class ReadPVPResult(CustomRecognition):
         score_change_fmt = self._format_change(score_change)
         rank_change_fmt = self._format_change(rank_change)
 
-        # 高级账号失败保护：仅以分数是否变化为准（分数变化区域 OCR 为空即视为保护）。
-        # 实机存在「分数不变但排名仍下降」的情况，因此不能再要求排名也无变化，
-        # 否则这类正常战斗会被误判为高账保护。
-        protected = not score_change_fmt
+        # 高级账号失败保护判定：仅当「分数变化为空 + 结果为失败」时才视为保护。
+        # 实机存在「分数不变但排名仍下降」的情况，故不以排名变化作否定条件；
+        # 但变化值 OCR 为空也可能是颜色遮罩未命中/动画截屏/OCR 抖动等识别问题，
+        # 若结果文字非失败（胜利/未知）则不判保护，并用「变化值未识别」文案区分，
+        # 避免误导用户以为保护次数已消耗。
+        is_loss = self._is_loss(result_text)
+        change_unrecognized = not score_change_fmt
+        protected = change_unrecognized and is_loss
+
         if protected:
-            # 判定依据仅记 debug：结果文案会由下方 PVP_Click:ExitResult 的 focus 统一输出一次，
-            # 避免同一条结果在识别器日志与节点 focus 中重复出现。
-            log_message("[PVP] 未识别到分数变化，判定为高级账号失败保护")
             result_msg = (
                 f"高账失败保护触发：本场不扣分，积分:{current_score or '-'} 排名:{current_rank or '-'}"
+            )
+        elif change_unrecognized:
+            result_msg = (
+                f"{result_text or '战斗结束'} 积分:{current_score or '-'}（变化值未识别） "
+                f"排名:{current_rank or '-'}（{rank_change_fmt or '变化值未识别'}）"
             )
         else:
             result_msg = (
@@ -196,22 +203,10 @@ class ReadPVPResult(CustomRecognition):
                 f"排名:{current_rank}({rank_change_fmt})"
             )
 
-        # 结果文案只通过节点 focus 输出一次（PVP_Read:Result 自身的 focus 仅提示“详情见日志”，
-        # 详情集中在本节点，避免同一条变化结果打印两次）。
-        # focus 键使用 Node.PipelineNode.Starting：该消息携带节点自身的 focus，
-        # 且 MFAAvalonia 与 MXU 均支持此命名空间（MXU 另支持 Node.Action.*）。
-        context.override_pipeline(
-            {
-                "PVP_Click:ExitResult": {
-                    "focus": {
-                        "Node.PipelineNode.Starting": {
-                            "content": result_msg,
-                            "display": ["log"],
-                        },
-                    },
-                },
-            }
-        )
+        # 结果详情直接输出到 agent 日志（每次识别成功即打印，无残留）；
+        # 不用 override 预写 PVP_Click:ExitResult 的 focus —— 多场循环时若某场识别失败
+        # 未再覆盖，会残留上一场文案误导用户。节点 focus 仅保留通用提示（PVP 战斗结束）。
+        log_message(f"[PVP] 结算: {result_msg}")
 
         return CustomRecognition.AnalyzeResult(
             box=result_detail.box,
@@ -222,8 +217,14 @@ class ReadPVPResult(CustomRecognition):
                 "current_rank": current_rank or "-",
                 "rank_change": rank_change_fmt or "-",
                 "protected": protected,
+                "score_change_unrecognized": change_unrecognized,
             },
         )
+
+    @staticmethod
+    def _is_loss(text: str) -> bool:
+        """结算文字是否为失败（含「败」字即判为失败，如 失败/战败/落败）"""
+        return bool(text) and "败" in text
 
     @staticmethod
     def _format_change(text: str) -> str:

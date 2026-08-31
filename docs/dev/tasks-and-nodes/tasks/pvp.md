@@ -45,7 +45,7 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 
 - `PVP_Check:BattleEnd`：OCR 识别「跳过」（`only_rec` 直接识别 ROI 并点击）。
 - `PVP_Wait:Settlement`：等待结算动画播放完毕。
-- `PVP_Read:Result`：Custom 识别 `ReadPVPResult`，读取结果、当前积分/排名及变化值（OCR 使用 `PVP_TextFilter` 颜色遮罩）；结果文案通过 `PVP_Click:ExitResult` 的 focus 输出一次。高级账号失败保护判定：分数变化区域 OCR 为空即视为保护（本场不扣分）。
+- `PVP_Read:Result`：Custom 识别 `ReadPVPResult`，读取结果、当前积分/排名及变化值（OCR 使用 `PVP_TextFilter` 颜色遮罩）；结果详情通过 `log_message` 输出到 agent 日志（每次识别成功即打印，无残留），focus 仅保留通用提示（「PVP 战斗结束」）。高级账号失败保护判定：**分数变化区域 OCR 为空 且 结果文字为失败** 才视为保护（本场不扣分）；若结果非失败，则以「变化值未识别」文案区分，避免 OCR/遮罩问题被误判为保护。
 - **提示说明**：PVP 不使用弹窗（toast），所有提示均为日志形式 —— 关键事件由 `log_message`（stderr + `info:` 前缀，MFAAvalonia/MXU/VSC 插件均可见）与部分 focus 日志（`Node.PipelineNode.Starting`，仅常规事件如顺序进度/任务完成）输出，避免同一条提示多通道重复。
 - `PVP_Click:ExitResult`：点击退出结果界面，循环关闭获得物品弹窗（`[JumpBack]SceneDo_GetItem`）后回到对战界面。
 
