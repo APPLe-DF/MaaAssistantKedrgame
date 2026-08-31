@@ -31,7 +31,7 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 
 - `PVP_Do:InitBattleCount`：Custom 动作 `InitPVPBattleCount`，初始化战斗计数器（`target_count` 由任务选项注入）。
 - `PVP_Select:Opponent`：Custom 识别 `SelectPVPOpponent`，对 3 个对手等级区域分别 OCR（`rois`），选择等级最低的点击（`click_positions`）。
-- `PVP_Check:ChallengeLimit`：今日挑战次数用尽提示（并列候选），命中后跳转 `PVP_Click:MainMenu` 结束任务。
+- `PVP_Check:ChallengeLimit`：今日挑战次数用尽（并列候选），命中后通过 `PVP_Log` 输出日志并跳转 `PVP_Click:MainMenu` 结束任务（不弹窗）。
 
 ### 战斗
 
@@ -46,13 +46,13 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 - `PVP_Check:BattleEnd`：OCR 识别「跳过」（`only_rec` 直接识别 ROI 并点击）。
 - `PVP_Wait:Settlement`：等待结算动画播放完毕。
 - `PVP_Read:Result`：Custom 识别 `ReadPVPResult`，读取结果、当前积分/排名及变化值（OCR 使用 `PVP_TextFilter` 颜色遮罩）；结果文案通过 `PVP_Click:ExitResult` 的 focus 输出一次。高级账号失败保护判定：分数变化区域 OCR 为空即视为保护（本场不扣分）。
-- **focus 键说明**：所有提示统一使用 `Node.PipelineNode.Starting` 键（节点命中后进入其 `next` 评估时发送，携带节点自身 focus，MFAAvalonia 与 MXU 均支持且只发送一次）。`PVP_Click:MainMenu` 的任务完成提示、`CheckPVPBattleCount` 的剩余次数提示同理。<br>注意：不要同时配置 `Node.Recognition.Succeeded` 键 —— MXU 同时支持两种键，会造成同一条提示重复显示两次。
+- **提示说明**：PVP 不使用弹窗（toast），所有提示均为日志形式 —— 关键事件由 `log_message`（stderr + `info:` 前缀，MFAAvalonia/MXU/VSC 插件均可见）与部分 focus 日志（`Node.PipelineNode.Starting`，仅常规事件如顺序进度/任务完成）输出，避免同一条提示多通道重复。
 - `PVP_Click:ExitResult`：点击退出结果界面，循环关闭获得物品弹窗（`[JumpBack]SceneDo_GetItem`）后回到对战界面。
 
 ### 循环与退出
 
 - `PVP_Verify:BackToBattleInterface`：确认回到对战界面。
-- `PVP_Do:CheckBattleCount`：Custom 动作 `CheckPVPBattleCount`，递减计数器；每次递减后通过 `override_pipeline` 注入 `Node.PipelineNode.Starting` focus 显示「PVP 剩余战斗次数: N」（仅日志），用完时改为「PVP 战斗次数已打完，返回主页」（log+toast）并将 `next` 改为 `PVP_Click:MainMenu`。
+- `PVP_Do:CheckBattleCount`：Custom 动作 `CheckPVPBattleCount`，递减计数器；每次递减后通过 `log_message` 输出「PVP 剩余战斗次数: N」，用完时输出「PVP 战斗次数已用完，返回主界面」并将 `next` 改为 `PVP_Click:MainMenu`。
 - `PVP_Click:MainMenu`：复用 `UI_Common_HomeButton` 点击返回主页按钮。
 - `PVP_End`：任务完成提示。
 

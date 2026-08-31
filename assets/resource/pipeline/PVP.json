@@ -148,15 +148,7 @@
         },
         "next": [
             "PVP_Click:MainMenu"
-        ],
-        "focus": {
-            "Node.PipelineNode.Starting": {
-                "content": "今日挑战次数已用完",
-                "display": [
-                    "toast"
-                ]
-            }
-        }
+        ]
     },
     "PVP_Click:StartBattle": {
         "desc": "点击开始战斗（复用 UI/Combat/Start2 编队界面按钮模板）",

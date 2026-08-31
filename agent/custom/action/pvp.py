@@ -80,34 +80,14 @@ class CheckPVPBattleCount(CustomAction):
             _remaining = None
             context.override_pipeline(
                 {
-                    # 用完：回主页结束任务，并提示一次（toast）
+                    # 用完：回主页结束任务（提示走 agent 日志，不弹窗）
                     "PVP_Do:CheckBattleCount": {
-                        "next": ["PVP_Click:MainMenu"],
-                        "focus": {
-                            "Node.PipelineNode.Starting": {
-                                "content": "PVP 战斗次数已打完，返回主页",
-                                "display": ["log", "toast"],
-                            },
-                        },
+                        "next": ["PVP_Click:MainMenu"]
                     },
                 }
             )
             return CustomAction.RunResult(success=True)
 
-        # 进度提示走 focus（Node.PipelineNode.Starting：本节点命中后进入其 next 评估时发送，
-        # 携带本节点自身 focus，MFAAvalonia 与 MXU 均显示；仅日志，不打扰）
-        context.override_pipeline(
-            {
-                "PVP_Do:CheckBattleCount": {
-                    "focus": {
-                        "Node.PipelineNode.Starting": {
-                            "content": f"PVP 剩余战斗次数: {_remaining}",
-                            "display": ["log"],
-                        },
-                    },
-                },
-            }
-        )
         log_message(f"[PVP] 剩余战斗次数: {_remaining}")
         return CustomAction.RunResult(success=True)
 
@@ -119,8 +99,8 @@ class PVPLog(CustomAction):
     参数：
     - content: 要输出的内容（必填）
 
-    仅通过 agent stderr（``info:`` 前缀格式）输出，不产生 focus 通知；与 focus 互补：
-    focus 负责 GUI 侧展示（toast/log），本动作负责 agent 日志通道的可见性。
+    仅通过 agent stderr（``info:`` 前缀格式）输出，不产生 focus 通知；本动作负责
+    agent 日志通道的可见性（PVP 不使用弹窗提示）。
     """
 
     def run(self, context: Context, argv: CustomAction.RunArg) -> CustomAction.RunResult:
