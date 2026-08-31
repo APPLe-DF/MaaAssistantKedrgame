@@ -23,7 +23,7 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 ### 入口与路由
 
 - `PVPMain`：任务入口。先尝试 `PVP_Click:Exercise`（主界面直达），未在主界面时通过 `[JumpBack]PVP_Do:JumpToMain` 回到主界面后重试。
-- `PVP_Do:JumpToMain`：使用通用 `SceneJump`（`target: "MainMenu"`）从任意界面跳转回主界面；场景图 `scene_jump_map.json` 已包含 `PVP` 场景（`detect: PVP_Verify:BattleInterface`）与 `PVP → MainMenu` 边（`jump: SceneDo_PauseHomeButton`），因此从玩家对战界面重启任务也能正确返回。
+- `PVP_Do:JumpToMain`：使用通用 `SceneJump`（`target: "MainMenu"`）从任意界面跳转回主界面；场景图 `scene_jump_map.json` 已包含 `PVP` 场景（`detect: PVP_Verify:BattleInterface`）与 `PVP → MainMenu` 边（`jump: SceneDo_PauseHomeButton`），以及编队界面场景 `Team`（`detect: AutoSweep_Click_Start2`，返回键 `SceneDo_PauseBackButton` 后可能落到 `MainMenu` 或 `PVP`），任意界面重启任务均能正确回主界面。
 - `PVP_Click:Exercise`：复用 `UI_MainMenu_exercise`（主界面-对战）识别并点击入口。
 - `PVP_Verify:BattleInterface`：确认已进入玩家对战界面（`PVP/battle_interface.png`）。
 
@@ -35,8 +35,8 @@ Pipeline 入口文件：`assets/resource/pipeline/PVP.json`
 
 ### 战斗
 
-- `PVP_Click:StartBattle`：点击开始战斗。
-- `PVP_Click:BeginCombat`：点击作战开始。`timeout: 30000ms` 覆盖长加载场景（loading 画面持续动画，无法 `post_wait_freezes`）；`next` 中自身重试直到 `PVP_Check:InBattle` 命中。
+- `PVP_Click:StartBattle`：点击开始战斗（复用通用模板 `UI/Combat/Start2.png`，编队界面「开始战斗」按钮，与自动战斗/扫荡共用）。
+- `PVP_Click:BeginCombat`：点击作战开始（复用通用模板 `UI/Combat/Start3.png`）。`timeout: 30000ms` 覆盖长加载场景（loading 画面持续动画，无法 `post_wait_freezes`）；`next` 中自身重试直到 `PVP_Check:InBattle` 命中。
 - `PVP_Check:InBattle`：检测是否在战斗中（并列候选），命中后进入 `PVP_Click:Speed2x`。
 - `PVP_Click:Speed2x`：点击 2 倍速。
 - `PVP_Wait:BattleLoop`：战斗循环等待（`timeout: 300000ms`），轮询 `PVP_Check:BattleEnd`（OCR「跳过」）；超时后走 `on_error` 兜底 `PVP_Read:Result`。

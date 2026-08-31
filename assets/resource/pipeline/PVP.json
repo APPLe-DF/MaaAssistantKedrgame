@@ -151,20 +151,20 @@
         }
     },
     "PVP_Click:StartBattle": {
-        "desc": "点击开始战斗",
+        "desc": "点击开始战斗（复用 UI/Combat/Start2 编队界面按钮模板）",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
                 "template": [
-                    "PVP/start_battle.png"
+                    "UI/Combat/Start2.png"
                 ],
                 "roi": [
-                    1048,
-                    642,
-                    158,
-                    58
+                    980,
+                    620,
+                    300,
+                    90
                 ],
-                "threshold": 0.8
+                "green_mask": true
             }
         },
         "pre_delay": 500,
@@ -175,20 +175,19 @@
         ]
     },
     "PVP_Click:BeginCombat": {
-        "desc": "点击作战开始。timeout: 30000ms 覆盖长加载场景（loading 画面持续动画，无法 post_wait_freezes）",
+        "desc": "点击作战开始（复用 UI/Combat/Start3 模板）。timeout: 30000ms 覆盖长加载场景（loading 画面持续动画，无法 post_wait_freezes）",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
                 "template": [
-                    "PVP/begin_combat.png"
+                    "UI/Combat/Start3.png"
                 ],
                 "roi": [
-                    896,
-                    204,
-                    249,
-                    243
-                ],
-                "threshold": 0.8
+                    950,
+                    250,
+                    330,
+                    160
+                ]
             }
         },
         "pre_delay": 500,

@@ -53,6 +53,10 @@
             "desc": "资源派遣（主界面）",
             "detect": "UI_MainMenu_in_maintenancearea"
         },
+        "Team": {
+            "desc": "编队界面（战斗准备）",
+            "detect": "AutoSweep_Click_Start2"
+        },
         "Combat": {
             "desc": "出击界面",
             "detect": "Status_In_Combat"
@@ -173,6 +177,17 @@
             "cost": 1,
             "jump": [
                 "SceneDo_MainMenu_ClickCenter"
+            ]
+        },
+        {
+            "from": "Team",
+            "to": [
+                "MainMenu",
+                "PVP"
+            ],
+            "cost": 1,
+            "jump": [
+                "SceneDo_PauseBackButton"
             ]
         },
         {
